@@ -1,6 +1,6 @@
 import SwiftUI
 
-// MARK: - Component Icon Bluetooth
+// MARK: - Component Icon Bluetooth Resmi
 struct OfficialBluetoothIcon: View {
     var body: some View {
         ZStack {
@@ -33,12 +33,12 @@ struct BluetoothShape: Shape {
     }
 }
 
-// MARK: - Modifier Grouped Container iOS
+// MARK: - Modifier Container iOS
 struct iOSGroupModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .padding(.horizontal, 16)
-            .padding(.vertical, 8)
+            .padding(.vertical, 10)
             .background(Color(red: 0.11, green: 0.11, blue: 0.12))
             .clipShape(RoundedRectangle(cornerRadius: 24, style: .continuous))
             .padding(.horizontal, 16)
@@ -124,7 +124,7 @@ struct SettingsMainView: View {
                                 SettingsIcon(systemName: "wifi", backgroundColor: .blue)
                                 Text("Wi-Fi").font(.system(size: 16)).foregroundColor(.white)
                                 Spacer()
-                                Text("Tidak Terhubung").font(.system(size: 15)).foregroundColor(Color(white: 0.45))
+                                Text("AWS D ROKET").font(.system(size: 15)).foregroundColor(Color(white: 0.45))
                                 Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
                             }.padding(.vertical, 11)
                             
@@ -310,11 +310,12 @@ struct SettingsMainView: View {
                         }
                         .iOSGroupedContainer()
                         
-                        Spacer().frame(height: 90)
+                        // Ruang kosong agar konten tidak tertutup bar pencarian bawah
+                        Spacer().frame(height: 75)
                     }
                 }
                 .navigationTitle("Pengaturan")
-                .navigationBarTitleDisplayMode(.inline) // Judul tetap melayang di atas saat di-scroll
+                .navigationBarTitleDisplayMode(.large) // Menggunakan Large Title standar iOS (bisa mengecil otomatis saat di-scroll)
                 .navigationDestination(for: String.self) { destination in
                     if destination == "Umum" {
                         GeneralSettingsView(path: $navigationPath)
@@ -327,7 +328,7 @@ struct SettingsMainView: View {
                     }
                 }
                 
-                // Floating Search Bar Bottom
+                // Floating Search Bar Bottom (Benar-benar Mentok Paling Bawah Tanpa Celah)
                 VStack(spacing: 0) {
                     Spacer()
                     HStack(spacing: 12) {
@@ -347,13 +348,13 @@ struct SettingsMainView: View {
                     .padding(.vertical, 12)
                     .background(
                         RoundedRectangle(cornerRadius: 26, style: .continuous)
-                            .fill(Color(white: 0.15, opacity: 0.60))
+                            .fill(Color(white: 0.15, opacity: 0.65))
                             .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 26, style: .continuous))
                     )
                     .padding(.horizontal, 8)
-                    .padding(.bottom, 0)
+                    .padding(.bottom, 0) // Mentok total ke batas bawah layar
                 }
-                .ignoresSafeArea(.keyboard, edges: .bottom)
+                .ignoresSafeArea(.all, edges: .bottom)
             }
         }
     }
@@ -566,7 +567,7 @@ struct GeneralSettingsView: View {
                 }
                 .iOSGroupedContainer()
                 
-                // Penyedia TV
+                // Penyedia TV (Terpisah ramping proporsional)
                 VStack(spacing: 0) {
                     HStack {
                         SettingsIcon(systemName: "tv", backgroundColor: .orange)
@@ -577,7 +578,7 @@ struct GeneralSettingsView: View {
                 }
                 .iOSGroupedContainer()
                 
-                // Manajemen VPN & Perangkat
+                // Manajemen VPN & Perangkat (Terpisah ramping)
                 VStack(spacing: 0) {
                     Button(action: { path.append("VPN") }) {
                         HStack {
@@ -591,7 +592,7 @@ struct GeneralSettingsView: View {
                 }
                 .iOSGroupedContainer()
                 
-                // Legal & Pengatur
+                // Legal & Pengatur (Terpisah ramping)
                 VStack(spacing: 0) {
                     HStack {
                         SettingsIcon(systemName: "doc.text.fill", backgroundColor: .gray)
@@ -613,7 +614,7 @@ struct GeneralSettingsView: View {
                 }
                 .iOSGroupedContainer()
                 
-                // Tombol Matikan Biru (Rata Kiri Sesuai Asli)
+                // Tombol Matikan Biru (Rata Kiri)
                 HStack {
                     Button(action: {}) {
                         Text("Matikan")
@@ -631,7 +632,7 @@ struct GeneralSettingsView: View {
             .padding(.bottom, 20)
         }
         .navigationTitle("Umum")
-        .navigationBarTitleDisplayMode(.inline) // Menjaga judul "Umum" melayang tetap di atas saat di-scroll
+        .navigationBarTitleDisplayMode(.inline)
         .background(Color.black)
     }
 }
@@ -718,8 +719,6 @@ struct AboutSettingsView: View {
                     Divider().background(Color(white: 0.2))
                     HStack { Text("IMEI"); Spacer(); Text("35 260231 063492 5").foregroundColor(.gray) }.padding(.vertical, 12)
                     Divider().background(Color(white: 0.2))
-                    
-                    // ICCID dengan ukuran teks proporsional besar sesuai asli
                     HStack {
                         Text("ICCID").foregroundColor(.white)
                         Spacer()
@@ -751,7 +750,7 @@ struct AboutSettingsView: View {
             .padding(.bottom, 20)
         }
         .navigationTitle("Mengenai")
-        .navigationBarTitleDisplayMode(.inline) // Menjaga judul "Mengenai" melayang di atas
+        .navigationBarTitleDisplayMode(.inline)
         .background(Color.black)
     }
 }
