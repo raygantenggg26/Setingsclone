@@ -1,6 +1,6 @@
 import SwiftUI
 
-// Logo Bluetooth Vektor Resmi Apple
+// MARK: - Component Icon Bluetooth
 struct OfficialBluetoothIcon: View {
     var body: some View {
         ZStack {
@@ -33,45 +33,7 @@ struct BluetoothShape: Shape {
     }
 }
 
-// Tombol Kembali (Lebih Besar & Proporsional Sesuai Asli)
-struct SingleCircleBackButton: View {
-    let action: () -> Void
-    
-    var body: some View {
-        Button(action: action) {
-            ZStack {
-                Circle()
-                    .fill(Color(white: 0.22, opacity: 0.65))
-                    .frame(width: 42, height: 42) // Diperbesar lebih besar
-                Image(systemName: "chevron.left")
-                    .font(.system(size: 18, weight: .bold)) // Ukuran panah diperbesar
-                    .foregroundColor(.white)
-            }
-        }
-        .buttonStyle(PlainButtonStyle())
-    }
-}
-
-// Header Sub-Halaman Standar iOS
-struct StandardHeader: View {
-    let title: String
-    let action: () -> Void
-    
-    var body: some View {
-        HStack(spacing: 12) {
-            SingleCircleBackButton(action: action)
-            Text(title)
-                .font(.system(size: 17, weight: .semibold))
-                .foregroundColor(.white)
-            Spacer()
-        }
-        .padding(.horizontal, 16)
-        .padding(.top, 4)
-        .padding(.bottom, 2)
-    }
-}
-
-// Container Modifikator Proporsional
+// MARK: - Modifier Grouped Container iOS
 struct iOSGroupModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
@@ -89,7 +51,7 @@ extension View {
     }
 }
 
-// View Utama Pengaturan
+// MARK: - View Utama Pengaturan
 struct SettingsMainView: View {
     @State private var isAirplaneModeOn = false
     @State private var searchText = ""
@@ -178,7 +140,6 @@ struct SettingsMainView: View {
                             
                             Divider().background(Color(white: 0.2))
                             
-                            // Seluler (Tanpa tulisan "Mati")
                             HStack {
                                 SettingsIcon(systemName: "antenna.radiowaves.left.and.right", backgroundColor: .green)
                                 Text("Seluler").font(.system(size: 16)).foregroundColor(.white)
@@ -207,7 +168,7 @@ struct SettingsMainView: View {
                         }
                         .iOSGroupedContainer()
                         
-                        // Menu Utama (Lengkap)
+                        // Menu Utama
                         VStack(spacing: 0) {
                             Button(action: { navigationPath.append("Umum") }) {
                                 HStack {
@@ -349,11 +310,11 @@ struct SettingsMainView: View {
                         }
                         .iOSGroupedContainer()
                         
-                        // Ruang kosong agar konten tidak tertutup bar cari yang mentok bawah
-                        Spacer().frame(height: 70)
+                        Spacer().frame(height: 90)
                     }
                 }
                 .navigationTitle("Pengaturan")
+                .navigationBarTitleDisplayMode(.inline) // Judul tetap melayang di atas saat di-scroll
                 .navigationDestination(for: String.self) { destination in
                     if destination == "Umum" {
                         GeneralSettingsView(path: $navigationPath)
@@ -366,7 +327,7 @@ struct SettingsMainView: View {
                     }
                 }
                 
-                // Floating Search Bar Bottom (Benar-benar Mentok Paling Bawah)
+                // Floating Search Bar Bottom
                 VStack(spacing: 0) {
                     Spacer()
                     HStack(spacing: 12) {
@@ -390,7 +351,7 @@ struct SettingsMainView: View {
                             .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 26, style: .continuous))
                     )
                     .padding(.horizontal, 8)
-                    .padding(.bottom, 0) // Mentok total tanpa jarak ke bawah
+                    .padding(.bottom, 0)
                 }
                 .ignoresSafeArea(.keyboard, edges: .bottom)
             }
@@ -398,7 +359,7 @@ struct SettingsMainView: View {
     }
 }
 
-// Icon Standar
+// MARK: - Icon Standar
 struct SettingsIcon: View {
     let systemName: String
     let backgroundColor: Color
@@ -416,15 +377,13 @@ struct SettingsIcon: View {
     }
 }
 
-// View Halaman "Umum"
+// MARK: - View Halaman "Umum"
 struct GeneralSettingsView: View {
     @Binding var path: NavigationPath
     
     var body: some View {
         ScrollView {
             VStack(spacing: 16) {
-                StandardHeader(title: "") { path.removeLast() }
-                
                 // Header Penjelasan Umum
                 VStack(alignment: .leading, spacing: 10) {
                     ZStack {
@@ -450,6 +409,7 @@ struct GeneralSettingsView: View {
                 .background(Color(red: 0.11, green: 0.11, blue: 0.12))
                 .clipShape(RoundedRectangle(cornerRadius: 24, style: .continuous))
                 .padding(.horizontal, 16)
+                .padding(.top, 8)
                 
                 // Mengenai dll
                 VStack(spacing: 0) {
@@ -653,34 +613,36 @@ struct GeneralSettingsView: View {
                 }
                 .iOSGroupedContainer()
                 
-                // Tombol Matikan Biru
-                Button(action: {}) {
-                    Text("Matikan")
-                        .font(.system(size: 16, weight: .medium))
-                        .foregroundColor(.blue)
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 12)
-                        .background(Color(red: 0.11, green: 0.11, blue: 0.12))
-                        .clipShape(RoundedRectangle(cornerRadius: 24, style: .continuous))
+                // Tombol Matikan Biru (Rata Kiri Sesuai Asli)
+                HStack {
+                    Button(action: {}) {
+                        Text("Matikan")
+                            .font(.system(size: 16, weight: .regular))
+                            .foregroundColor(.blue)
+                    }
+                    Spacer()
                 }
+                .padding(.horizontal, 20)
+                .padding(.vertical, 12)
+                .background(Color(red: 0.11, green: 0.11, blue: 0.12))
+                .clipShape(RoundedRectangle(cornerRadius: 24, style: .continuous))
                 .padding(.horizontal, 16)
             }
             .padding(.bottom, 20)
         }
-        .toolbar(.hidden, for: .navigationBar)
+        .navigationTitle("Umum")
+        .navigationBarTitleDisplayMode(.inline) // Menjaga judul "Umum" melayang tetap di atas saat di-scroll
         .background(Color.black)
     }
 }
 
-// View Halaman "Mengenai"
+// MARK: - View Halaman "Mengenai"
 struct AboutSettingsView: View {
     @Binding var path: NavigationPath
     
     var body: some View {
         ScrollView {
             VStack(spacing: 16) {
-                StandardHeader(title: "Mengenai") { path.removeLast() }
-                
                 VStack(spacing: 0) {
                     HStack { Text("Nama"); Spacer(); Text("iphone").foregroundColor(.gray) }.padding(.vertical, 12)
                     Divider().background(Color(white: 0.2))
@@ -693,6 +655,7 @@ struct AboutSettingsView: View {
                     HStack { Text("Nomor Seri"); Spacer(); Text("KJX6WK6357").foregroundColor(.gray) }.padding(.vertical, 12)
                 }
                 .iOSGroupedContainer()
+                .padding(.top, 8)
                 
                 VStack(alignment: .leading, spacing: 6) {
                     Text("Garansi Terbatas").foregroundColor(.white).font(.system(size: 16))
@@ -755,7 +718,16 @@ struct AboutSettingsView: View {
                     Divider().background(Color(white: 0.2))
                     HStack { Text("IMEI"); Spacer(); Text("35 260231 063492 5").foregroundColor(.gray) }.padding(.vertical, 12)
                     Divider().background(Color(white: 0.2))
-                    HStack { Text("ICCID"); Spacer(); Text("89620130003168785752").font(.system(size: 13)).foregroundColor(.gray) }.padding(.vertical, 12)
+                    
+                    // ICCID dengan ukuran teks proporsional besar sesuai asli
+                    HStack {
+                        Text("ICCID").foregroundColor(.white)
+                        Spacer()
+                        Text("89620130003168785752")
+                            .font(.system(size: 15))
+                            .foregroundColor(.gray)
+                    }
+                    .padding(.vertical, 12)
                 }
                 .iOSGroupedContainer()
                 
@@ -778,20 +750,19 @@ struct AboutSettingsView: View {
             }
             .padding(.bottom, 20)
         }
-        .toolbar(.hidden, for: .navigationBar)
+        .navigationTitle("Mengenai")
+        .navigationBarTitleDisplayMode(.inline) // Menjaga judul "Mengenai" melayang di atas
         .background(Color.black)
     }
 }
 
-// Menu "Manajemen VPN & Perangkat"
+// MARK: - Menu "Manajemen VPN & Perangkat"
 struct VPNManagementView: View {
     @Binding var path: NavigationPath
     
     var body: some View {
         ScrollView {
             VStack(spacing: 16) {
-                StandardHeader(title: "Manajemen VPN & Perangkat") { path.removeLast() }
-                
                 VStack(spacing: 0) {
                     HStack {
                         SettingsIcon(systemName: "network", backgroundColor: .blue)
@@ -803,6 +774,7 @@ struct VPNManagementView: View {
                     .padding(.vertical, 12)
                 }
                 .iOSGroupedContainer()
+                .padding(.top, 8)
                 
                 VStack(spacing: 0) {
                     HStack {
@@ -816,20 +788,19 @@ struct VPNManagementView: View {
                 .iOSGroupedContainer()
             }
         }
-        .toolbar(.hidden, for: .navigationBar)
+        .navigationTitle("Manajemen VPN & Perangkat")
+        .navigationBarTitleDisplayMode(.inline)
         .background(Color.black)
     }
 }
 
-// Menu "Pengaturan Kepercayaan Sertifikat"
+// MARK: - Menu "Pengaturan Kepercayaan Sertifikat"
 struct CertificateTrustView: View {
     @Binding var path: NavigationPath
     
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 6) {
-                StandardHeader(title: "Pengaturan Kepercayaan Sertifikat") { path.removeLast() }
-                
+            VStack(alignment: .leading, spacing: 0) {
                 VStack(spacing: 0) {
                     HStack {
                         Text("Versi Stok Sertifikat").foregroundColor(.white)
@@ -848,18 +819,20 @@ struct CertificateTrustView: View {
                     .padding(.vertical, 12)
                 }
                 .iOSGroupedContainer()
+                .padding(.top, 16)
                 
                 Button(action: {}) {
                     Text("Pelajari sertifikat terpercaya lebih lanjut")
                         .font(.system(size: 13))
                         .foregroundColor(.blue)
                 }
-                .padding(.leading, 32)
-                .padding(.top, 4)
+                .padding(.horizontal, 32)
+                .padding(.top, 10)
             }
             .padding(.bottom, 20)
         }
-        .toolbar(.hidden, for: .navigationBar)
+        .navigationTitle("Pengaturan Kepercayaan Sertifikat")
+        .navigationBarTitleDisplayMode(.inline)
         .background(Color.black)
     }
 }
