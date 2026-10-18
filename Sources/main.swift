@@ -18,7 +18,7 @@ struct OfficialBluetoothLogo: Shape {
     }
 }
 
-// Tombol Kembali Lingkaran Bundar Khas iOS Modern (Bersih Tanpa Dobel)
+// Tombol Kembali Lingkaran Bundar Khas iOS Modern (Bersih Satu Lapis, Tanpa Dobel)
 struct CircleBackButton: View {
     @Environment(\.dismiss) var dismiss
     
@@ -28,7 +28,7 @@ struct CircleBackButton: View {
         }) {
             ZStack {
                 Circle()
-                    .fill(Color(white: 0.20))
+                    .fill(Color(white: 0.22, opacity: 0.65))
                     .frame(width: 32, height: 32)
                 Image(systemName: "chevron.left")
                     .font(.system(size: 14, weight: .bold))
@@ -38,7 +38,7 @@ struct CircleBackButton: View {
     }
 }
 
-// Modifikator Kotak Proporsional iOS (Radius 24pt, Padding Pas Tidak Terlalu Gemuk)
+// Modifikator Kotak Proporsional iOS (Radius 24pt, Padding Pas)
 struct iOSGroupModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
@@ -134,7 +134,7 @@ struct SettingsMainView: View {
                                 SettingsIcon(systemName: "wifi", backgroundColor: .blue)
                                 Text("Wi-Fi").font(.system(size: 16)).foregroundColor(.white)
                                 Spacer()
-                                Text("AWIS D ROKET").font(.system(size: 15)).foregroundColor(Color(white: 0.45))
+                                Text("Tidak Terhubung").font(.system(size: 15)).foregroundColor(Color(white: 0.45))
                                 Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
                             }
                             .padding(.vertical, 8)
@@ -156,6 +156,7 @@ struct SettingsMainView: View {
                                 SettingsIcon(systemName: "antenna.radiowaves.left.and.right", backgroundColor: .green)
                                 Text("Seluler").font(.system(size: 16)).foregroundColor(.white)
                                 Spacer()
+                                Text("Mati").font(.system(size: 15)).foregroundColor(Color(white: 0.45))
                                 Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
                             }
                             .padding(.vertical, 8)
@@ -183,7 +184,7 @@ struct SettingsMainView: View {
                         }
                         .iOSGroupedContainer()
                         
-                        // Section 4: Menu Utama Sistem (LENGKAP SEMUA)
+                        // Section 4: Menu Utama Sistem (LENGKAP)
                         VStack(spacing: 0) {
                             NavigationLink(destination: GeneralSettingsView()) {
                                 HStack {
@@ -406,7 +407,7 @@ struct SettingsIcon: View {
     }
 }
 
-// Menu "Umum" (LENGKAP DENGAN CARD HEADER & SEMUA SUB-MENU BAWAH)
+// Menu "Umum" (LENGKAP DENGAN KARTU HEADER, SEMUA SUB-MENU, & TOMBOL MATIKAN BIRU)
 struct GeneralSettingsView: View {
     var body: some View {
         ScrollView {
@@ -604,7 +605,7 @@ struct GeneralSettingsView: View {
                 }
                 .iOSGroupedContainer()
                 
-                // SECTION 6: Manajemen VPN & Perangkat
+                // SECTION 6: Manajemen VPN & Perangkat (Logo jaringan/gembok pas)
                 VStack(spacing: 0) {
                     NavigationLink(destination: VPNManagementView()) {
                         HStack {
@@ -618,7 +619,7 @@ struct GeneralSettingsView: View {
                 }
                 .iOSGroupedContainer()
                 
-                // SECTION 7: Legal & Transfer iPhone
+                // SECTION 7: Legal & Pengatur (Dipisah Kotak Sendiri)
                 VStack(spacing: 0) {
                     HStack {
                         SettingsIcon(systemName: "doc.text.fill", backgroundColor: .gray)
@@ -626,9 +627,11 @@ struct GeneralSettingsView: View {
                         Spacer()
                         Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
                     }.padding(.vertical, 8)
-                    
-                    Divider().background(Color(white: 0.2))
-                    
+                }
+                .iOSGroupedContainer()
+                
+                // SECTION 8: Transfer atau Atur Ulang iPhone (Dipisah Kotak Sendiri)
+                VStack(spacing: 0) {
                     HStack {
                         SettingsIcon(systemName: "iphone.gen3", backgroundColor: .blue)
                         Text("Transfer atau Atur Ulang iPhone").foregroundColor(.white).font(.system(size: 16))
@@ -637,6 +640,19 @@ struct GeneralSettingsView: View {
                     }.padding(.vertical, 8)
                 }
                 .iOSGroupedContainer()
+                
+                // TOMBOL MATIKAN WARNA BIRU DI BAWAH
+                Button(action: {}) {
+                    Text("Matikan")
+                        .font(.system(size: 16, weight: .medium))
+                        .foregroundColor(.blue)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 12)
+                        .background(Color(red: 0.11, green: 0.11, blue: 0.12))
+                        .clipShape(RoundedRectangle(cornerRadius: 24, style: .continuous))
+                }
+                .padding(.horizontal, 16)
+                .padding(.top, 4)
             }
             .padding(.bottom, 20)
         }
@@ -652,13 +668,13 @@ struct GeneralSettingsView: View {
     }
 }
 
-// Menu "Mengenai" (LENGKAP LENGKAP SEMUA DATA & SERTIFIKAT)
+// Menu "Mengenai" (Nama iPhone diubah jadi "iphone")
 struct AboutSettingsView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 16) {
                 VStack(spacing: 0) {
-                    HStack { Text("Nama"); Spacer(); Text("iPhone Dimas").foregroundColor(.gray) }.padding(.vertical, 9)
+                    HStack { Text("Nama"); Spacer(); Text("iPhone").foregroundColor(.gray) }.padding(.vertical, 9)
                     Divider().background(Color(white: 0.2))
                     HStack { Text("Versi iOS"); Spacer(); Text("26.5").foregroundColor(.gray) }.padding(.vertical, 9)
                     Divider().background(Color(white: 0.2))
@@ -722,7 +738,7 @@ struct AboutSettingsView: View {
                 }
                 .iOSGroupedContainer()
                 
-                // PENGATURAN KEPERCAYAAN SERTIFIKAT DI BAGIAN BAWAH MENGENAI
+                // PENGATURAN KEPERCAYAAN SERTIFIKAT
                 VStack(spacing: 0) {
                     NavigationLink(destination: CertificateTrustView()) {
                         HStack {
