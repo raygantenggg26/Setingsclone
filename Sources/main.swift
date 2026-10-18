@@ -183,7 +183,7 @@ struct SettingsMainView: View {
                         }
                         .iOSGroupedContainer()
                         
-                        // Section 4: Menu Utama Sistem
+                        // Section 4: Menu Utama Sistem (LENGKAP SEMUA)
                         VStack(spacing: 0) {
                             NavigationLink(destination: GeneralSettingsView()) {
                                 HStack {
@@ -210,6 +210,128 @@ struct SettingsMainView: View {
                             HStack {
                                 SettingsIcon(systemName: "sparkles", backgroundColor: Color(red: 0.92, green: 0.35, blue: 0.18))
                                 Text("Apple Intelligence & Siri").font(.system(size: 16)).foregroundColor(.white)
+                                Spacer()
+                                Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
+                            }
+                            .padding(.vertical, 8)
+                            
+                            Divider().background(Color(white: 0.2))
+                            
+                            HStack {
+                                SettingsIcon(systemName: "magnifyingglass", backgroundColor: .gray)
+                                Text("Cari").font(.system(size: 16)).foregroundColor(.white)
+                                Spacer()
+                                Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
+                            }
+                            .padding(.vertical, 8)
+                            
+                            Divider().background(Color(white: 0.2))
+                            
+                            HStack {
+                                SettingsIcon(systemName: "camera.fill", backgroundColor: .gray)
+                                Text("Kamera").font(.system(size: 16)).foregroundColor(.white)
+                                Spacer()
+                                Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
+                            }
+                            .padding(.vertical, 8)
+                            
+                            Divider().background(Color(white: 0.2))
+                            
+                            HStack {
+                                SettingsIcon(systemName: "apps.iphone", backgroundColor: .blue)
+                                Text("Layar Utama & Perpustakaan App").font(.system(size: 16)).foregroundColor(.white)
+                                Spacer()
+                                Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
+                            }
+                            .padding(.vertical, 8)
+                            
+                            Divider().background(Color(white: 0.2))
+                            
+                            HStack {
+                                SettingsIcon(systemName: "switch.2", backgroundColor: .gray)
+                                Text("Pusat Kontrol").font(.system(size: 16)).foregroundColor(.white)
+                                Spacer()
+                                Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
+                            }
+                            .padding(.vertical, 8)
+                            
+                            Divider().background(Color(white: 0.2))
+                            
+                            HStack {
+                                SettingsIcon(systemName: "clock.badge.checkmark.fill", backgroundColor: .black)
+                                Text("Siaga").font(.system(size: 16)).foregroundColor(.white)
+                                Spacer()
+                                Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
+                            }
+                            .padding(.vertical, 8)
+                            
+                            Divider().background(Color(white: 0.2))
+                            
+                            HStack {
+                                SettingsIcon(systemName: "sun.max.fill", backgroundColor: .blue)
+                                Text("Tampilan & Kecerahan").font(.system(size: 16)).foregroundColor(.white)
+                                Spacer()
+                                Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
+                            }
+                            .padding(.vertical, 8)
+                            
+                            Divider().background(Color(white: 0.2))
+                            
+                            HStack {
+                                SettingsIcon(systemName: "arrow.right.circle.fill", backgroundColor: .blue)
+                                Text("Tombol Tindakan").font(.system(size: 16)).foregroundColor(.white)
+                                Spacer()
+                                Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
+                            }
+                            .padding(.vertical, 8)
+                            
+                            Divider().background(Color(white: 0.2))
+                            
+                            HStack {
+                                SettingsIcon(systemName: "circles.hexagongrid.fill", backgroundColor: Color(red: 0.3, green: 0.7, blue: 0.9))
+                                Text("Wallpaper").font(.system(size: 16)).foregroundColor(.white)
+                                Spacer()
+                                Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
+                            }
+                            .padding(.vertical, 8)
+                        }
+                        .iOSGroupedContainer()
+                        
+                        // Section 5: Pemberitahuan & Lainnya
+                        VStack(spacing: 0) {
+                            HStack {
+                                SettingsIcon(systemName: "bell.badge.fill", backgroundColor: .red)
+                                Text("Pemberitahuan").font(.system(size: 16)).foregroundColor(.white)
+                                Spacer()
+                                Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
+                            }
+                            .padding(.vertical, 8)
+                            
+                            Divider().background(Color(white: 0.2))
+                            
+                            HStack {
+                                SettingsIcon(systemName: "speaker.wave.3.fill", backgroundColor: Color(red: 0.95, green: 0.25, blue: 0.45))
+                                Text("Bunyi & Haptik").font(.system(size: 16)).foregroundColor(.white)
+                                Spacer()
+                                Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
+                            }
+                            .padding(.vertical, 8)
+                            
+                            Divider().background(Color(white: 0.2))
+                            
+                            HStack {
+                                SettingsIcon(systemName: "moon.fill", backgroundColor: .indigo)
+                                Text("Fokus").font(.system(size: 16)).foregroundColor(.white)
+                                Spacer()
+                                Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
+                            }
+                            .padding(.vertical, 8)
+                            
+                            Divider().background(Color(white: 0.2))
+                            
+                            HStack {
+                                SettingsIcon(systemName: "hourglass", backgroundColor: .indigo)
+                                Text("Durasi Layar").font(.system(size: 16)).foregroundColor(.white)
                                 Spacer()
                                 Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
                             }
@@ -284,7 +406,7 @@ struct SettingsIcon: View {
     }
 }
 
-// Menu "Umum" (LENGKAP DENGAN CARD HEADER DESKRIPSI)
+// Menu "Umum" (LENGKAP DENGAN CARD HEADER & SEMUA SUB-MENU BAWAH)
 struct GeneralSettingsView: View {
     var body: some View {
         ScrollView {
@@ -317,7 +439,7 @@ struct GeneralSettingsView: View {
                 .padding(.horizontal, 16)
                 .padding(.top, 4)
                 
-                // SECTION 1
+                // SECTION 1: Mengenai dll
                 VStack(spacing: 0) {
                     NavigationLink(destination: AboutSettingsView()) {
                         HStack {
@@ -348,7 +470,7 @@ struct GeneralSettingsView: View {
                 }
                 .iOSGroupedContainer()
                 
-                // SECTION 2
+                // SECTION 2: AppleCare
                 VStack(spacing: 0) {
                     HStack {
                         SettingsIcon(systemName: "apple.logo", backgroundColor: .red)
@@ -359,7 +481,7 @@ struct GeneralSettingsView: View {
                 }
                 .iOSGroupedContainer()
                 
-                // SECTION 3
+                // SECTION 3: AirDrop dll
                 VStack(spacing: 0) {
                     HStack {
                         SettingsIcon(systemName: "airdrop", backgroundColor: .blue)
@@ -405,6 +527,116 @@ struct GeneralSettingsView: View {
                     }.padding(.vertical, 8)
                 }
                 .iOSGroupedContainer()
+                
+                // SECTION 4: Bahasa & Wilayah dll
+                VStack(spacing: 0) {
+                    HStack {
+                        SettingsIcon(systemName: "globe", backgroundColor: .blue)
+                        Text("Bahasa & Wilayah").foregroundColor(.white).font(.system(size: 16))
+                        Spacer()
+                        Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
+                    }.padding(.vertical, 8)
+                    
+                    Divider().background(Color(white: 0.2))
+                    
+                    HStack {
+                        SettingsIcon(systemName: "textformat", backgroundColor: .gray)
+                        Text("Font").foregroundColor(.white).font(.system(size: 16))
+                        Spacer()
+                        Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
+                    }.padding(.vertical, 8)
+                    
+                    Divider().background(Color(white: 0.2))
+                    
+                    HStack {
+                        SettingsIcon(systemName: "key.fill", backgroundColor: .gray)
+                        Text("Isi-Auto & Kata Sandi").foregroundColor(.white).font(.system(size: 16))
+                        Spacer()
+                        Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
+                    }.padding(.vertical, 8)
+                    
+                    Divider().background(Color(white: 0.2))
+                    
+                    HStack {
+                        SettingsIcon(systemName: "book.fill", backgroundColor: .gray)
+                        Text("Kamus").foregroundColor(.white).font(.system(size: 16))
+                        Spacer()
+                        Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
+                    }.padding(.vertical, 8)
+                    
+                    Divider().background(Color(white: 0.2))
+                    
+                    HStack {
+                        SettingsIcon(systemName: "keyboard", backgroundColor: .gray)
+                        Text("Papan Ketik").foregroundColor(.white).font(.system(size: 16))
+                        Spacer()
+                        Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
+                    }.padding(.vertical, 8)
+                    
+                    Divider().background(Color(white: 0.2))
+                    
+                    HStack {
+                        SettingsIcon(systemName: "arrow.2.squarepath", backgroundColor: .green)
+                        Text("Segarkan App di Latar").foregroundColor(.white).font(.system(size: 16))
+                        Spacer()
+                        Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
+                    }.padding(.vertical, 8)
+                    
+                    Divider().background(Color(white: 0.2))
+                    
+                    HStack {
+                        SettingsIcon(systemName: "calendar", backgroundColor: .red)
+                        Text("Tanggal & Waktu").foregroundColor(.white).font(.system(size: 16))
+                        Spacer()
+                        Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
+                    }.padding(.vertical, 8)
+                }
+                .iOSGroupedContainer()
+                
+                // SECTION 5: Penyedia TV
+                VStack(spacing: 0) {
+                    HStack {
+                        SettingsIcon(systemName: "tv", backgroundColor: .orange)
+                        Text("Penyedia TV").foregroundColor(.white).font(.system(size: 16))
+                        Spacer()
+                        Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
+                    }.padding(.vertical, 8)
+                }
+                .iOSGroupedContainer()
+                
+                // SECTION 6: Manajemen VPN & Perangkat
+                VStack(spacing: 0) {
+                    NavigationLink(destination: VPNManagementView()) {
+                        HStack {
+                            SettingsIcon(systemName: "network", backgroundColor: .blue)
+                            Text("Manajemen VPN & Perangkat").foregroundColor(.white).font(.system(size: 16))
+                            Spacer()
+                            Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
+                        }
+                        .padding(.vertical, 8)
+                    }
+                }
+                .iOSGroupedContainer()
+                
+                // SECTION 7: Legal & Transfer iPhone
+                VStack(spacing: 0) {
+                    HStack {
+                        SettingsIcon(systemName: "doc.text.fill", backgroundColor: .gray)
+                        Text("Legal & Pengatur").foregroundColor(.white).font(.system(size: 16))
+                        Spacer()
+                        Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
+                    }.padding(.vertical, 8)
+                    
+                    Divider().background(Color(white: 0.2))
+                    
+                    HStack {
+                        SettingsIcon(systemName: "iphone.gen3", backgroundColor: .blue)
+                        Text("Transfer atau Atur Ulang iPhone").foregroundColor(.white).font(.system(size: 16))
+                        Spacer()
+                        Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
+                    }.padding(.vertical, 8)
+                }
+                .iOSGroupedContainer()
             }
             .padding(.bottom, 20)
         }
@@ -420,7 +652,7 @@ struct GeneralSettingsView: View {
     }
 }
 
-// Menu "Mengenai" (LENGKAP UTUH SEPERTI SEMULA)
+// Menu "Mengenai" (LENGKAP LENGKAP SEMUA DATA & SERTIFIKAT)
 struct AboutSettingsView: View {
     var body: some View {
         ScrollView {
@@ -489,10 +721,113 @@ struct AboutSettingsView: View {
                     HStack { Text("IMEI2"); Spacer(); Text("35 260231 067993 8").foregroundColor(.gray) }.padding(.vertical, 9)
                 }
                 .iOSGroupedContainer()
+                
+                // PENGATURAN KEPERCAYAAN SERTIFIKAT DI BAGIAN BAWAH MENGENAI
+                VStack(spacing: 0) {
+                    NavigationLink(destination: CertificateTrustView()) {
+                        HStack {
+                            Text("Pengaturan Kepercayaan Sertifikat").foregroundColor(.white).font(.system(size: 16))
+                            Spacer()
+                            Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
+                        }
+                        .padding(.vertical, 11)
+                    }
+                }
+                .iOSGroupedContainer()
             }
             .padding(.bottom, 20)
         }
         .navigationTitle("Mengenai")
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                CircleBackButton()
+            }
+        }
+        .background(Color.black)
+    }
+}
+
+// Menu "Manajemen VPN & Perangkat"
+struct VPNManagementView: View {
+    var body: some View {
+        ScrollView {
+            VStack(spacing: 16) {
+                VStack(spacing: 0) {
+                    HStack {
+                        SettingsIcon(systemName: "network", backgroundColor: .blue)
+                        Text("VPN").font(.system(size: 16)).foregroundColor(.white)
+                        Spacer()
+                        Text("Tidak Terhubung").foregroundColor(.gray)
+                        Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
+                    }
+                    .padding(.vertical, 11)
+                }
+                .iOSGroupedContainer()
+                .padding(.top, 4)
+                
+                VStack(spacing: 0) {
+                    HStack {
+                        Text("Masuk ke Akun Kantor atau Sekolah...")
+                            .font(.system(size: 15))
+                            .foregroundColor(.blue)
+                        Spacer()
+                    }
+                    .padding(.vertical, 11)
+                }
+                .iOSGroupedContainer()
+            }
+            .padding(.bottom, 20)
+        }
+        .navigationTitle("Manajemen VPN & Perangkat")
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                CircleBackButton()
+            }
+        }
+        .background(Color.black)
+    }
+}
+
+// Menu "Pengaturan Kepercayaan Sertifikat"
+struct CertificateTrustView: View {
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 6) {
+                VStack(spacing: 0) {
+                    HStack {
+                        Text("Versi Stok Sertifikat").foregroundColor(.white)
+                        Spacer()
+                        Text("2026040100").foregroundColor(.gray)
+                    }
+                    .padding(.vertical, 11)
+                    
+                    Divider().background(Color(white: 0.2))
+                    
+                    HStack {
+                        Text("Versi Aset Kepercayaan").foregroundColor(.white)
+                        Spacer()
+                        Text("1013").foregroundColor(.gray)
+                    }
+                    .padding(.vertical, 11)
+                }
+                .iOSGroupedContainer()
+                .padding(.top, 4)
+                
+                Button(action: {}) {
+                    Text("Pelajari sertifikat terpercaya lebih lanjut")
+                        .font(.system(size: 13))
+                        .foregroundColor(.blue)
+                }
+                .padding(.leading, 32)
+                .padding(.top, 4)
+            }
+            .padding(.bottom, 20)
+        }
+        .navigationTitle("Pengaturan Kepercayaan Sertifikat")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .toolbar {
