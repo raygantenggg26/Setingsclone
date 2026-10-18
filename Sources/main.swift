@@ -1,6 +1,6 @@
 import SwiftUI
 
-// Logo Bluetooth Vektor Resmi Apple (100% Tampil Sempurna & Akurat)
+// Logo Bluetooth Vektor Resmi Apple
 struct OfficialBluetoothIcon: View {
     var body: some View {
         ZStack {
@@ -33,7 +33,7 @@ struct BluetoothShape: Shape {
     }
 }
 
-// Tombol Kembali Lingkaran Tunggal Bersih (Tanpa Tumpang Tindih)
+// Tombol Kembali Transparan Sesuai Referensi Foto Asli
 struct SingleCircleBackButton: View {
     let action: () -> Void
     
@@ -52,14 +52,14 @@ struct SingleCircleBackButton: View {
     }
 }
 
-// Container Modifikator Proporsional (Pas, Tidak Terlalu Kurus/Gemuk)
+// Container Modifikator Proporsional (Pas & Berisi)
 struct iOSGroupModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .padding(.horizontal, 16)
-            .padding(.vertical, 5)
+            .padding(.vertical, 8)
             .background(Color(red: 0.11, green: 0.11, blue: 0.12))
-            .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
+            .clipShape(RoundedRectangle(cornerRadius: 24, style: .continuous))
             .padding(.horizontal, 16)
     }
 }
@@ -82,17 +82,17 @@ struct SettingsMainView: View {
                 Color.black.ignoresSafeArea()
                 
                 ScrollView {
-                    VStack(spacing: 14) {
+                    VStack(spacing: 16) {
                         
                         // Profil Akun Apple
-                        HStack(spacing: 14) {
+                        HStack(spacing: 16) {
                             Circle()
                                 .fill(LinearGradient(
                                     colors: [Color(red: 0.25, green: 0.58, blue: 0.68), Color(red: 0.10, green: 0.25, blue: 0.35)],
                                     startPoint: .topLeading,
                                     endPoint: .bottomTrailing
                                 ))
-                                .frame(width: 56, height: 56)
+                                .frame(width: 58, height: 58)
                             
                             VStack(alignment: .leading, spacing: 2) {
                                 Text("Dimas Saputra")
@@ -111,14 +111,14 @@ struct SettingsMainView: View {
                         .iOSGroupedContainer()
                         .padding(.top, 4)
                         
-                        // Banner iOS Update (Dibuat Lebih Berisi/Gemuk Pas)
+                        // Banner iOS Update
                         HStack {
                             Text("Perbarui ke iOS 27.0.1")
                                 .font(.system(size: 16))
                                 .foregroundColor(.white)
                             Spacer()
                             ZStack {
-                                Circle().fill(Color.red).frame(width: 18, height: 18)
+                                Circle().fill(Color.red).frame(width: 19, height: 19)
                                 Text("1").font(.system(size: 11, weight: .bold)).foregroundColor(.white)
                             }
                             Image(systemName: "chevron.right")
@@ -135,7 +135,7 @@ struct SettingsMainView: View {
                                 Text("Mode Pesawat").font(.system(size: 16)).foregroundColor(.white)
                                 Spacer()
                                 Toggle("", isOn: $isAirplaneModeOn).labelsHidden()
-                            }.padding(.vertical, 9)
+                            }.padding(.vertical, 11)
                             
                             Divider().background(Color(white: 0.2))
                             
@@ -145,7 +145,7 @@ struct SettingsMainView: View {
                                 Spacer()
                                 Text("Tidak Terhubung").font(.system(size: 15)).foregroundColor(Color(white: 0.45))
                                 Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
-                            }.padding(.vertical, 9)
+                            }.padding(.vertical, 11)
                             
                             Divider().background(Color(white: 0.2))
                             
@@ -155,7 +155,7 @@ struct SettingsMainView: View {
                                 Spacer()
                                 Text("Tidak Terhubung").font(.system(size: 15)).foregroundColor(Color(white: 0.45))
                                 Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
-                            }.padding(.vertical, 9)
+                            }.padding(.vertical, 11)
                             
                             Divider().background(Color(white: 0.2))
                             
@@ -165,7 +165,7 @@ struct SettingsMainView: View {
                                 Spacer()
                                 Text("Mati").font(.system(size: 15)).foregroundColor(Color(white: 0.45))
                                 Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
-                            }.padding(.vertical, 9)
+                            }.padding(.vertical, 11)
                             
                             Divider().background(Color(white: 0.2))
                             
@@ -175,7 +175,7 @@ struct SettingsMainView: View {
                                 Spacer()
                                 Text("Mati").font(.system(size: 15)).foregroundColor(Color(white: 0.45))
                                 Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
-                            }.padding(.vertical, 9)
+                            }.padding(.vertical, 11)
                             
                             Divider().background(Color(white: 0.2))
                             
@@ -184,7 +184,7 @@ struct SettingsMainView: View {
                                 Text("Baterai").font(.system(size: 16)).foregroundColor(.white)
                                 Spacer()
                                 Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
-                            }.padding(.vertical, 9)
+                            }.padding(.vertical, 11)
                         }
                         .iOSGroupedContainer()
                         
@@ -197,7 +197,7 @@ struct SettingsMainView: View {
                                     Spacer()
                                     Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
                                 }
-                                .padding(.vertical, 9)
+                                .padding(.vertical, 11)
                             }
                             
                             Divider().background(Color(white: 0.2))
@@ -207,7 +207,7 @@ struct SettingsMainView: View {
                                 Text("Aksesibilitas").font(.system(size: 16)).foregroundColor(.white)
                                 Spacer()
                                 Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
-                            }.padding(.vertical, 9)
+                            }.padding(.vertical, 11)
                             
                             Divider().background(Color(white: 0.2))
                             
@@ -216,7 +216,7 @@ struct SettingsMainView: View {
                                 Text("Apple Intelligence & Siri").font(.system(size: 16)).foregroundColor(.white)
                                 Spacer()
                                 Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
-                            }.padding(.vertical, 9)
+                            }.padding(.vertical, 11)
                             
                             Divider().background(Color(white: 0.2))
                             
@@ -225,7 +225,7 @@ struct SettingsMainView: View {
                                 Text("Cari").font(.system(size: 16)).foregroundColor(.white)
                                 Spacer()
                                 Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
-                            }.padding(.vertical, 9)
+                            }.padding(.vertical, 11)
                             
                             Divider().background(Color(white: 0.2))
                             
@@ -234,7 +234,7 @@ struct SettingsMainView: View {
                                 Text("Kamera").font(.system(size: 16)).foregroundColor(.white)
                                 Spacer()
                                 Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
-                            }.padding(.vertical, 9)
+                            }.padding(.vertical, 11)
                             
                             Divider().background(Color(white: 0.2))
                             
@@ -243,7 +243,7 @@ struct SettingsMainView: View {
                                 Text("Layar Utama & Perpustakaan App").font(.system(size: 16)).foregroundColor(.white)
                                 Spacer()
                                 Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
-                            }.padding(.vertical, 9)
+                            }.padding(.vertical, 11)
                             
                             Divider().background(Color(white: 0.2))
                             
@@ -252,7 +252,7 @@ struct SettingsMainView: View {
                                 Text("Pusat Kontrol").font(.system(size: 16)).foregroundColor(.white)
                                 Spacer()
                                 Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
-                            }.padding(.vertical, 9)
+                            }.padding(.vertical, 11)
                             
                             Divider().background(Color(white: 0.2))
                             
@@ -261,7 +261,7 @@ struct SettingsMainView: View {
                                 Text("Siaga").font(.system(size: 16)).foregroundColor(.white)
                                 Spacer()
                                 Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
-                            }.padding(.vertical, 9)
+                            }.padding(.vertical, 11)
                             
                             Divider().background(Color(white: 0.2))
                             
@@ -270,7 +270,7 @@ struct SettingsMainView: View {
                                 Text("Tampilan & Kecerahan").font(.system(size: 16)).foregroundColor(.white)
                                 Spacer()
                                 Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
-                            }.padding(.vertical, 9)
+                            }.padding(.vertical, 11)
                             
                             Divider().background(Color(white: 0.2))
                             
@@ -279,7 +279,7 @@ struct SettingsMainView: View {
                                 Text("Tombol Tindakan").font(.system(size: 16)).foregroundColor(.white)
                                 Spacer()
                                 Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
-                            }.padding(.vertical, 9)
+                            }.padding(.vertical, 11)
                             
                             Divider().background(Color(white: 0.2))
                             
@@ -288,18 +288,18 @@ struct SettingsMainView: View {
                                 Text("Wallpaper").font(.system(size: 16)).foregroundColor(.white)
                                 Spacer()
                                 Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
-                            }.padding(.vertical, 9)
+                            }.padding(.vertical, 11)
                         }
                         .iOSGroupedContainer()
                         
-                        // Menu Bawah (Pemberitahuan, dll)
+                        // Menu Bawah
                         VStack(spacing: 0) {
                             HStack {
                                 SettingsIcon(systemName: "bell.badge.fill", backgroundColor: .red)
                                 Text("Pemberitahuan").font(.system(size: 16)).foregroundColor(.white)
                                 Spacer()
                                 Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
-                            }.padding(.vertical, 9)
+                            }.padding(.vertical, 11)
                             
                             Divider().background(Color(white: 0.2))
                             
@@ -308,7 +308,7 @@ struct SettingsMainView: View {
                                 Text("Bunyi & Haptik").font(.system(size: 16)).foregroundColor(.white)
                                 Spacer()
                                 Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
-                            }.padding(.vertical, 9)
+                            }.padding(.vertical, 11)
                             
                             Divider().background(Color(white: 0.2))
                             
@@ -317,7 +317,7 @@ struct SettingsMainView: View {
                                 Text("Fokus").font(.system(size: 16)).foregroundColor(.white)
                                 Spacer()
                                 Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
-                            }.padding(.vertical, 9)
+                            }.padding(.vertical, 11)
                             
                             Divider().background(Color(white: 0.2))
                             
@@ -326,11 +326,11 @@ struct SettingsMainView: View {
                                 Text("Durasi Layar").font(.system(size: 16)).foregroundColor(.white)
                                 Spacer()
                                 Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
-                            }.padding(.vertical, 9)
+                            }.padding(.vertical, 11)
                         }
                         .iOSGroupedContainer()
                         
-                        Spacer().frame(height: 85)
+                        Spacer().frame(height: 100)
                     }
                 }
                 .navigationTitle("Pengaturan")
@@ -346,7 +346,7 @@ struct SettingsMainView: View {
                     }
                 }
                 
-                // Floating Search Bar Bottom (Posisi & Transparansi Pas)
+                // Floating Search Bar Bottom
                 HStack(spacing: 12) {
                     Image(systemName: "magnifyingglass")
                         .foregroundColor(Color.white.opacity(0.6))
@@ -361,14 +361,14 @@ struct SettingsMainView: View {
                         .font(.system(size: 16))
                 }
                 .padding(.horizontal, 16)
-                .padding(.vertical, 12)
+                .padding(.vertical, 13)
                 .background(
-                    RoundedRectangle(cornerRadius: 26, style: .continuous)
-                        .fill(Color(white: 0.15, opacity: 0.50))
-                        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 26, style: .continuous))
+                    RoundedRectangle(cornerRadius: 28, style: .continuous)
+                        .fill(Color(white: 0.15, opacity: 0.45))
+                        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 28, style: .continuous))
                 )
                 .padding(.horizontal, 16)
-                .padding(.bottom, 12)
+                .padding(.bottom, 24)
             }
         }
     }
@@ -392,13 +392,13 @@ struct SettingsIcon: View {
     }
 }
 
-// View Halaman "Umum" (Lengkap Semua Menu)
+// View Halaman "Umum"
 struct GeneralSettingsView: View {
     @Binding var path: NavigationPath
     
     var body: some View {
         ScrollView {
-            VStack(spacing: 14) {
+            VStack(spacing: 16) {
                 HStack {
                     SingleCircleBackButton { path.removeLast() }
                     Spacer()
@@ -432,7 +432,7 @@ struct GeneralSettingsView: View {
                 .clipShape(RoundedRectangle(cornerRadius: 24, style: .continuous))
                 .padding(.horizontal, 16)
                 
-                // Mengenai, dll
+                // Mengenai dll
                 VStack(spacing: 0) {
                     Button(action: { path.append("Mengenai") }) {
                         HStack {
@@ -441,7 +441,7 @@ struct GeneralSettingsView: View {
                             Spacer()
                             Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
                         }
-                        .padding(.vertical, 10)
+                        .padding(.vertical, 11)
                     }
                     
                     Divider().background(Color(white: 0.2))
@@ -451,7 +451,7 @@ struct GeneralSettingsView: View {
                         Text("Pembaruan Perangkat Lunak").foregroundColor(.white).font(.system(size: 16))
                         Spacer()
                         Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
-                    }.padding(.vertical, 10)
+                    }.padding(.vertical, 11)
                     
                     Divider().background(Color(white: 0.2))
                     
@@ -460,7 +460,7 @@ struct GeneralSettingsView: View {
                         Text("Penyimpanan iPhone").foregroundColor(.white).font(.system(size: 16))
                         Spacer()
                         Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
-                    }.padding(.vertical, 10)
+                    }.padding(.vertical, 11)
                 }
                 .iOSGroupedContainer()
                 
@@ -471,7 +471,7 @@ struct GeneralSettingsView: View {
                         Text("AppleCare & Garansi").foregroundColor(.white).font(.system(size: 16))
                         Spacer()
                         Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
-                    }.padding(.vertical, 10)
+                    }.padding(.vertical, 11)
                 }
                 .iOSGroupedContainer()
                 
@@ -482,7 +482,7 @@ struct GeneralSettingsView: View {
                         Text("AirDrop").foregroundColor(.white).font(.system(size: 16))
                         Spacer()
                         Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
-                    }.padding(.vertical, 10)
+                    }.padding(.vertical, 11)
                     
                     Divider().background(Color(white: 0.2))
                     
@@ -491,7 +491,7 @@ struct GeneralSettingsView: View {
                         Text("AirPlay & Kontinuitas").foregroundColor(.white).font(.system(size: 16))
                         Spacer()
                         Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
-                    }.padding(.vertical, 10)
+                    }.padding(.vertical, 11)
                     
                     Divider().background(Color(white: 0.2))
                     
@@ -500,7 +500,7 @@ struct GeneralSettingsView: View {
                         Text("Gambar dalam Gambar").foregroundColor(.white).font(.system(size: 16))
                         Spacer()
                         Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
-                    }.padding(.vertical, 10)
+                    }.padding(.vertical, 11)
                     
                     Divider().background(Color(white: 0.2))
                     
@@ -509,7 +509,7 @@ struct GeneralSettingsView: View {
                         Text("Pengambilan Layar").foregroundColor(.white).font(.system(size: 16))
                         Spacer()
                         Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
-                    }.padding(.vertical, 10)
+                    }.padding(.vertical, 11)
                     
                     Divider().background(Color(white: 0.2))
                     
@@ -518,7 +518,7 @@ struct GeneralSettingsView: View {
                         Text("CarPlay").foregroundColor(.white).font(.system(size: 16))
                         Spacer()
                         Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
-                    }.padding(.vertical, 10)
+                    }.padding(.vertical, 11)
                 }
                 .iOSGroupedContainer()
                 
@@ -529,7 +529,7 @@ struct GeneralSettingsView: View {
                         Text("Bahasa & Wilayah").foregroundColor(.white).font(.system(size: 16))
                         Spacer()
                         Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
-                    }.padding(.vertical, 10)
+                    }.padding(.vertical, 11)
                     
                     Divider().background(Color(white: 0.2))
                     
@@ -538,7 +538,7 @@ struct GeneralSettingsView: View {
                         Text("Font").foregroundColor(.white).font(.system(size: 16))
                         Spacer()
                         Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
-                    }.padding(.vertical, 10)
+                    }.padding(.vertical, 11)
                     
                     Divider().background(Color(white: 0.2))
                     
@@ -547,7 +547,7 @@ struct GeneralSettingsView: View {
                         Text("Isi-Auto & Kata Sandi").foregroundColor(.white).font(.system(size: 16))
                         Spacer()
                         Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
-                    }.padding(.vertical, 10)
+                    }.padding(.vertical, 11)
                     
                     Divider().background(Color(white: 0.2))
                     
@@ -556,7 +556,7 @@ struct GeneralSettingsView: View {
                         Text("Kamus").foregroundColor(.white).font(.system(size: 16))
                         Spacer()
                         Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
-                    }.padding(.vertical, 10)
+                    }.padding(.vertical, 11)
                     
                     Divider().background(Color(white: 0.2))
                     
@@ -565,7 +565,7 @@ struct GeneralSettingsView: View {
                         Text("Papan Ketik").foregroundColor(.white).font(.system(size: 16))
                         Spacer()
                         Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
-                    }.padding(.vertical, 10)
+                    }.padding(.vertical, 11)
                     
                     Divider().background(Color(white: 0.2))
                     
@@ -574,7 +574,7 @@ struct GeneralSettingsView: View {
                         Text("Segarkan App di Latar").foregroundColor(.white).font(.system(size: 16))
                         Spacer()
                         Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
-                    }.padding(.vertical, 10)
+                    }.padding(.vertical, 11)
                     
                     Divider().background(Color(white: 0.2))
                     
@@ -583,7 +583,7 @@ struct GeneralSettingsView: View {
                         Text("Tanggal & Waktu").foregroundColor(.white).font(.system(size: 16))
                         Spacer()
                         Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
-                    }.padding(.vertical, 10)
+                    }.padding(.vertical, 11)
                 }
                 .iOSGroupedContainer()
                 
@@ -594,7 +594,7 @@ struct GeneralSettingsView: View {
                         Text("Penyedia TV").foregroundColor(.white).font(.system(size: 16))
                         Spacer()
                         Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
-                    }.padding(.vertical, 10)
+                    }.padding(.vertical, 11)
                 }
                 .iOSGroupedContainer()
                 
@@ -607,30 +607,30 @@ struct GeneralSettingsView: View {
                             Spacer()
                             Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
                         }
-                        .padding(.vertical, 10)
+                        .padding(.vertical, 11)
                     }
                 }
                 .iOSGroupedContainer()
                 
-                // Legal & Pengatur (Dipisah)
+                // Legal & Pengatur
                 VStack(spacing: 0) {
                     HStack {
                         SettingsIcon(systemName: "doc.text.fill", backgroundColor: .gray)
                         Text("Legal & Pengatur").foregroundColor(.white).font(.system(size: 16))
                         Spacer()
                         Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
-                    }.padding(.vertical, 10)
+                    }.padding(.vertical, 11)
                 }
                 .iOSGroupedContainer()
                 
-                // Transfer atau Atur Ulang iPhone (Dipisah)
+                // Transfer atau Atur Ulang iPhone
                 VStack(spacing: 0) {
                     HStack {
                         SettingsIcon(systemName: "iphone.gen3", backgroundColor: .blue)
                         Text("Transfer atau Atur Ulang iPhone").foregroundColor(.white).font(.system(size: 16))
                         Spacer()
                         Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
-                    }.padding(.vertical, 10)
+                    }.padding(.vertical, 11)
                 }
                 .iOSGroupedContainer()
                 
@@ -653,13 +653,13 @@ struct GeneralSettingsView: View {
     }
 }
 
-// View Halaman "Mengenai" (Lengkap dengan Sertifikat)
+// View Halaman "Mengenai" (SEID dengan Panah & EID di Bawah)
 struct AboutSettingsView: View {
     @Binding var path: NavigationPath
     
     var body: some View {
         ScrollView {
-            VStack(spacing: 14) {
+            VStack(spacing: 16) {
                 HStack {
                     SingleCircleBackButton { path.removeLast() }
                     Spacer()
@@ -671,76 +671,93 @@ struct AboutSettingsView: View {
                 .padding(.top, 8)
                 
                 VStack(spacing: 0) {
-                    HStack { Text("Nama"); Spacer(); Text("iphone").foregroundColor(.gray) }.padding(.vertical, 11)
+                    HStack { Text("Nama"); Spacer(); Text("iphone").foregroundColor(.gray) }.padding(.vertical, 12)
                     Divider().background(Color(white: 0.2))
-                    HStack { Text("Versi iOS"); Spacer(); Text("26.5").foregroundColor(.gray) }.padding(.vertical, 11)
+                    HStack { Text("Versi iOS"); Spacer(); Text("26.5").foregroundColor(.gray) }.padding(.vertical, 12)
                     Divider().background(Color(white: 0.2))
-                    HStack { Text("Nama Model"); Spacer(); Text("iPhone 17 Pro Max").foregroundColor(.gray) }.padding(.vertical, 11)
+                    HStack { Text("Nama Model"); Spacer(); Text("iPhone 17 Pro Max").foregroundColor(.gray) }.padding(.vertical, 12)
                     Divider().background(Color(white: 0.2))
-                    HStack { Text("Nomor Model"); Spacer(); Text("MFYP4PA/A").foregroundColor(.gray) }.padding(.vertical, 11)
+                    HStack { Text("Nomor Model"); Spacer(); Text("MFYP4PA/A").foregroundColor(.gray) }.padding(.vertical, 12)
                     Divider().background(Color(white: 0.2))
-                    HStack { Text("Nomor Seri"); Spacer(); Text("KJX6WK6357").foregroundColor(.gray) }.padding(.vertical, 11)
+                    HStack { Text("Nomor Seri"); Spacer(); Text("KJX6WK6357").foregroundColor(.gray) }.padding(.vertical, 12)
                 }
                 .iOSGroupedContainer()
                 
-                VStack(alignment: .leading, spacing: 5) {
+                VStack(alignment: .leading, spacing: 6) {
                     Text("Garansi Terbatas").foregroundColor(.white).font(.system(size: 16))
                     Text("Kedaluwarsa pada 27/12/26").font(.system(size: 13)).foregroundColor(.gray)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal, 16)
-                .padding(.vertical, 11)
+                .padding(.vertical, 12)
                 .background(Color(red: 0.11, green: 0.11, blue: 0.12))
-                .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
+                .clipShape(RoundedRectangle(cornerRadius: 24, style: .continuous))
                 .padding(.horizontal, 16)
                 
                 VStack(spacing: 0) {
-                    HStack { Text("Lagu"); Spacer(); Text("0").foregroundColor(.gray) }.padding(.vertical, 11)
+                    HStack { Text("Lagu"); Spacer(); Text("0").foregroundColor(.gray) }.padding(.vertical, 12)
                     Divider().background(Color(white: 0.2))
-                    HStack { Text("Video"); Spacer(); Text("1.029").foregroundColor(.gray) }.padding(.vertical, 11)
+                    HStack { Text("Video"); Spacer(); Text("1.029").foregroundColor(.gray) }.padding(.vertical, 12)
                     Divider().background(Color(white: 0.2))
-                    HStack { Text("Foto"); Spacer(); Text("7.862").foregroundColor(.gray) }.padding(.vertical, 11)
+                    HStack { Text("Foto"); Spacer(); Text("7.862").foregroundColor(.gray) }.padding(.vertical, 12)
                     Divider().background(Color(white: 0.2))
-                    HStack { Text("Aplikasi"); Spacer(); Text("39").foregroundColor(.gray) }.padding(.vertical, 11)
+                    HStack { Text("Aplikasi"); Spacer(); Text("39").foregroundColor(.gray) }.padding(.vertical, 12)
                     Divider().background(Color(white: 0.2))
-                    HStack { Text("Kapasitas"); Spacer(); Text("256 GB").foregroundColor(.gray) }.padding(.vertical, 11)
+                    HStack { Text("Kapasitas"); Spacer(); Text("256 GB").foregroundColor(.gray) }.padding(.vertical, 12)
                     Divider().background(Color(white: 0.2))
-                    HStack { Text("Tersedia"); Spacer(); Text("157,19 GB").foregroundColor(.gray) }.padding(.vertical, 11)
+                    HStack { Text("Tersedia"); Spacer(); Text("157,19 GB").foregroundColor(.gray) }.padding(.vertical, 12)
+                }
+                .iOSGroupedContainer()
+                
+                // Bagian SEID (Dengan Panah) & EID (Angka di Bawah)
+                VStack(spacing: 0) {
+                    HStack { Text("Alamat Wi-Fi"); Spacer(); Text("B8:01:1F:BA:90:38").foregroundColor(.gray) }.padding(.vertical, 12)
+                    Divider().background(Color(white: 0.2))
+                    HStack { Text("Bluetooth"); Spacer(); Text("B8:01:1F:B8:D8:67").foregroundColor(.gray) }.padding(.vertical, 12)
+                    Divider().background(Color(white: 0.2))
+                    HStack { Text("Firmware Modem"); Spacer(); Text("1.60.02").foregroundColor(.gray) }.padding(.vertical, 12)
+                    Divider().background(Color(white: 0.2))
+                    
+                    // SEID dengan Panah Kanan Sesuai Asli
+                    HStack {
+                        Text("SEID").foregroundColor(.white)
+                        Spacer()
+                        Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
+                    }.padding(.vertical, 12)
+                    
+                    Divider().background(Color(white: 0.2))
+                    
+                    // EID dengan Angka di Bawah Sesuai Asli
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("EID").foregroundColor(.white)
+                        Text("89049032020008884800234954216871")
+                            .font(.system(size: 13))
+                            .foregroundColor(.gray)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.vertical, 10)
+                    
+                    Divider().background(Color(white: 0.2))
+                    HStack { Text("Kunci Operator"); Spacer(); Text("Tidak ada pembatasan SIM").foregroundColor(.gray) }.padding(.vertical, 12)
                 }
                 .iOSGroupedContainer()
                 
                 VStack(spacing: 0) {
-                    HStack { Text("Alamat Wi-Fi"); Spacer(); Text("B8:01:1F:BA:90:38").foregroundColor(.gray) }.padding(.vertical, 11)
+                    HStack { Text("Jaringan"); Spacer(); Text("INDOSATOOREDOO").foregroundColor(.gray) }.padding(.vertical, 12)
                     Divider().background(Color(white: 0.2))
-                    HStack { Text("Bluetooth"); Spacer(); Text("B8:01:1F:B8:D8:67").foregroundColor(.gray) }.padding(.vertical, 11)
+                    HStack { Text("Operator"); Spacer(); Text("INDOSAT 70.0").foregroundColor(.gray) }.padding(.vertical, 12)
                     Divider().background(Color(white: 0.2))
-                    HStack { Text("Firmware Modem"); Spacer(); Text("1.60.02").foregroundColor(.gray) }.padding(.vertical, 11)
+                    HStack { Text("IMEI"); Spacer(); Text("35 260231 063492 5").foregroundColor(.gray) }.padding(.vertical, 12)
                     Divider().background(Color(white: 0.2))
-                    HStack { Text("SEID"); Spacer(); Text("").foregroundColor(.gray) }.padding(.vertical, 11)
-                    Divider().background(Color(white: 0.2))
-                    HStack { Text("EID"); Spacer(); Text("89049032020008884800234954216871").font(.system(size: 13)).foregroundColor(.gray) }.padding(.vertical, 11)
-                    Divider().background(Color(white: 0.2))
-                    HStack { Text("Kunci Operator"); Spacer(); Text("Tidak ada pembatasan SIM").foregroundColor(.gray) }.padding(.vertical, 11)
+                    HStack { Text("ICCID"); Spacer(); Text("89620130003168785752").font(.system(size: 13)).foregroundColor(.gray) }.padding(.vertical, 12)
                 }
                 .iOSGroupedContainer()
                 
                 VStack(spacing: 0) {
-                    HStack { Text("Jaringan"); Spacer(); Text("INDOSATOOREDOO").foregroundColor(.gray) }.padding(.vertical, 11)
-                    Divider().background(Color(white: 0.2))
-                    HStack { Text("Operator"); Spacer(); Text("INDOSAT 70.0").foregroundColor(.gray) }.padding(.vertical, 11)
-                    Divider().background(Color(white: 0.2))
-                    HStack { Text("IMEI"); Spacer(); Text("35 260231 063492 5").foregroundColor(.gray) }.padding(.vertical, 11)
-                    Divider().background(Color(white: 0.2))
-                    HStack { Text("ICCID"); Spacer(); Text("89620130003168785752").font(.system(size: 13)).foregroundColor(.gray) }.padding(.vertical, 11)
+                    HStack { Text("IMEI2"); Spacer(); Text("35 260231 067993 8").foregroundColor(.gray) }.padding(.vertical, 12)
                 }
                 .iOSGroupedContainer()
                 
-                VStack(spacing: 0) {
-                    HStack { Text("IMEI2"); Spacer(); Text("35 260231 067993 8").foregroundColor(.gray) }.padding(.vertical, 11)
-                }
-                .iOSGroupedContainer()
-                
-                // Menu Sertifikat yang sempat terlewat
                 VStack(spacing: 0) {
                     Button(action: { path.append("Sertifikat") }) {
                         HStack {
@@ -748,7 +765,7 @@ struct AboutSettingsView: View {
                             Spacer()
                             Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
                         }
-                        .padding(.vertical, 11)
+                        .padding(.vertical, 12)
                     }
                 }
                 .iOSGroupedContainer()
@@ -766,7 +783,7 @@ struct VPNManagementView: View {
     
     var body: some View {
         ScrollView {
-            VStack(spacing: 14) {
+            VStack(spacing: 16) {
                 HStack {
                     SingleCircleBackButton { path.removeLast() }
                     Spacer()
@@ -785,7 +802,7 @@ struct VPNManagementView: View {
                         Text("Tidak Terhubung").foregroundColor(.gray)
                         Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
                     }
-                    .padding(.vertical, 11)
+                    .padding(.vertical, 12)
                 }
                 .iOSGroupedContainer()
                 
@@ -796,7 +813,7 @@ struct VPNManagementView: View {
                             .foregroundColor(.blue)
                         Spacer()
                     }
-                    .padding(.vertical, 11)
+                    .padding(.vertical, 12)
                 }
                 .iOSGroupedContainer()
             }
@@ -829,7 +846,7 @@ struct CertificateTrustView: View {
                         Spacer()
                         Text("2026040100").foregroundColor(.gray)
                     }
-                    .padding(.vertical, 11)
+                    .padding(.vertical, 12)
                     
                     Divider().background(Color(white: 0.2))
                     
@@ -838,7 +855,7 @@ struct CertificateTrustView: View {
                         Spacer()
                         Text("1013").foregroundColor(.gray)
                     }
-                    .padding(.vertical, 11)
+                    .padding(.vertical, 12)
                 }
                 .iOSGroupedContainer()
                 
