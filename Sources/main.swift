@@ -33,7 +33,7 @@ struct BluetoothShape: Shape {
     }
 }
 
-// Tombol Kembali Lingkaran Transparan Proporsional
+// Tombol Kembali (Ukuran Diperbesar Sesuai Asli)
 struct SingleCircleBackButton: View {
     let action: () -> Void
     
@@ -41,10 +41,10 @@ struct SingleCircleBackButton: View {
         Button(action: action) {
             ZStack {
                 Circle()
-                    .fill(Color(white: 0.22, opacity: 0.60))
-                    .frame(width: 34, height: 34)
+                    .fill(Color(white: 0.22, opacity: 0.65))
+                    .frame(width: 38, height: 38) // Diperbesar agar pas seperti asli
                 Image(systemName: "chevron.left")
-                    .font(.system(size: 15, weight: .bold))
+                    .font(.system(size: 16, weight: .bold)) // Ukuran panah disesuaikan
                     .foregroundColor(.white)
             }
         }
@@ -66,8 +66,8 @@ struct StandardHeader: View {
             Spacer()
         }
         .padding(.horizontal, 16)
-        .padding(.top, 8)
-        .padding(.bottom, 4)
+        .padding(.top, 6)
+        .padding(.bottom, 2)
     }
 }
 
@@ -349,8 +349,8 @@ struct SettingsMainView: View {
                         }
                         .iOSGroupedContainer()
                         
-                        // Padding bawah agar konten tidak tertutup bar pencarian
-                        Spacer().frame(height: 110)
+                        // Ruang kosong bawah agar konten tidak tertutup bar cari yang mentok
+                        Spacer().frame(height: 90)
                     }
                 }
                 .navigationTitle("Pengaturan")
@@ -366,8 +366,8 @@ struct SettingsMainView: View {
                     }
                 }
                 
-                // Floating Search Bar Bottom (Mentok ke Bawah Sesuai Asli)
-                VStack {
+                // Floating Search Bar Bottom (Mentok ke Bawah Tanpa Jarak Berlebih)
+                VStack(spacing: 0) {
                     Spacer()
                     HStack(spacing: 12) {
                         Image(systemName: "magnifyingglass")
@@ -383,14 +383,14 @@ struct SettingsMainView: View {
                             .font(.system(size: 16))
                     }
                     .padding(.horizontal, 16)
-                    .padding(.vertical, 13)
+                    .padding(.vertical, 12)
                     .background(
-                        RoundedRectangle(cornerRadius: 28, style: .continuous)
-                            .fill(Color(white: 0.15, opacity: 0.50))
-                            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 28, style: .continuous))
+                        RoundedRectangle(cornerRadius: 26, style: .continuous)
+                            .fill(Color(white: 0.15, opacity: 0.60))
+                            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 26, style: .continuous))
                     )
-                    .padding(.horizontal, 16)
-                    .padding(.bottom, 2)
+                    .padding(.horizontal, 12)
+                    .padding(.bottom, 0) // Benar-benar mentok ke bawah
                 }
                 .ignoresSafeArea(.keyboard, edges: .bottom)
             }
