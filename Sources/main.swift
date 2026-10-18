@@ -33,7 +33,7 @@ struct BluetoothShape: Shape {
     }
 }
 
-// Tombol Kembali (Ukuran Diperbesar Sesuai Asli)
+// Tombol Kembali (Lebih Besar & Proporsional Sesuai Asli)
 struct SingleCircleBackButton: View {
     let action: () -> Void
     
@@ -42,9 +42,9 @@ struct SingleCircleBackButton: View {
             ZStack {
                 Circle()
                     .fill(Color(white: 0.22, opacity: 0.65))
-                    .frame(width: 38, height: 38) // Diperbesar agar pas seperti asli
+                    .frame(width: 42, height: 42) // Diperbesar lebih besar
                 Image(systemName: "chevron.left")
-                    .font(.system(size: 16, weight: .bold)) // Ukuran panah disesuaikan
+                    .font(.system(size: 18, weight: .bold)) // Ukuran panah diperbesar
                     .foregroundColor(.white)
             }
         }
@@ -52,7 +52,7 @@ struct SingleCircleBackButton: View {
     }
 }
 
-// Header Sub-Halaman Standar iOS (Sejajar Rapi)
+// Header Sub-Halaman Standar iOS
 struct StandardHeader: View {
     let title: String
     let action: () -> Void
@@ -66,7 +66,7 @@ struct StandardHeader: View {
             Spacer()
         }
         .padding(.horizontal, 16)
-        .padding(.top, 6)
+        .padding(.top, 4)
         .padding(.bottom, 2)
     }
 }
@@ -178,11 +178,11 @@ struct SettingsMainView: View {
                             
                             Divider().background(Color(white: 0.2))
                             
+                            // Seluler (Tanpa tulisan "Mati")
                             HStack {
                                 SettingsIcon(systemName: "antenna.radiowaves.left.and.right", backgroundColor: .green)
                                 Text("Seluler").font(.system(size: 16)).foregroundColor(.white)
                                 Spacer()
-                                Text("Mati").font(.system(size: 15)).foregroundColor(Color(white: 0.45))
                                 Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
                             }.padding(.vertical, 11)
                             
@@ -349,8 +349,8 @@ struct SettingsMainView: View {
                         }
                         .iOSGroupedContainer()
                         
-                        // Ruang kosong bawah agar konten tidak tertutup bar cari yang mentok
-                        Spacer().frame(height: 90)
+                        // Ruang kosong agar konten tidak tertutup bar cari yang mentok bawah
+                        Spacer().frame(height: 70)
                     }
                 }
                 .navigationTitle("Pengaturan")
@@ -366,7 +366,7 @@ struct SettingsMainView: View {
                     }
                 }
                 
-                // Floating Search Bar Bottom (Mentok ke Bawah Tanpa Jarak Berlebih)
+                // Floating Search Bar Bottom (Benar-benar Mentok Paling Bawah)
                 VStack(spacing: 0) {
                     Spacer()
                     HStack(spacing: 12) {
@@ -389,8 +389,8 @@ struct SettingsMainView: View {
                             .fill(Color(white: 0.15, opacity: 0.60))
                             .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 26, style: .continuous))
                     )
-                    .padding(.horizontal, 12)
-                    .padding(.bottom, 0) // Benar-benar mentok ke bawah
+                    .padding(.horizontal, 8)
+                    .padding(.bottom, 0) // Mentok total tanpa jarak ke bawah
                 }
                 .ignoresSafeArea(.keyboard, edges: .bottom)
             }
