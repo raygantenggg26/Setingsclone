@@ -33,7 +33,7 @@ struct BluetoothShape: Shape {
     }
 }
 
-// Tombol Kembali Transparan Sesuai Referensi Foto Asli
+// Tombol Kembali Lingkaran Transparan Proporsional
 struct SingleCircleBackButton: View {
     let action: () -> Void
     
@@ -42,9 +42,9 @@ struct SingleCircleBackButton: View {
             ZStack {
                 Circle()
                     .fill(Color(white: 0.22, opacity: 0.60))
-                    .frame(width: 32, height: 32)
+                    .frame(width: 34, height: 34)
                 Image(systemName: "chevron.left")
-                    .font(.system(size: 14, weight: .bold))
+                    .font(.system(size: 15, weight: .bold))
                     .foregroundColor(.white)
             }
         }
@@ -52,7 +52,26 @@ struct SingleCircleBackButton: View {
     }
 }
 
-// Container Modifikator Proporsional (Pas & Berisi)
+// Header Sub-Halaman Standar iOS (Sejajar Rapi)
+struct StandardHeader: View {
+    let title: String
+    let action: () -> Void
+    
+    var body: some View {
+        HStack(spacing: 12) {
+            SingleCircleBackButton(action: action)
+            Text(title)
+                .font(.system(size: 17, weight: .semibold))
+                .foregroundColor(.white)
+            Spacer()
+        }
+        .padding(.horizontal, 16)
+        .padding(.top, 8)
+        .padding(.bottom, 4)
+    }
+}
+
+// Container Modifikator Proporsional
 struct iOSGroupModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
@@ -330,7 +349,8 @@ struct SettingsMainView: View {
                         }
                         .iOSGroupedContainer()
                         
-                        Spacer().frame(height: 100)
+                        // Padding bawah agar konten tidak tertutup bar pencarian
+                        Spacer().frame(height: 110)
                     }
                 }
                 .navigationTitle("Pengaturan")
@@ -346,29 +366,33 @@ struct SettingsMainView: View {
                     }
                 }
                 
-                // Floating Search Bar Bottom
-                HStack(spacing: 12) {
-                    Image(systemName: "magnifyingglass")
-                        .foregroundColor(Color.white.opacity(0.6))
-                        .font(.system(size: 16, weight: .semibold))
-                    
-                    TextField("Cari", text: $searchText)
-                        .font(.system(size: 16))
-                        .foregroundColor(.white)
-                    
-                    Image(systemName: "mic.fill")
-                        .foregroundColor(Color.white.opacity(0.6))
-                        .font(.system(size: 16))
+                // Floating Search Bar Bottom (Mentok ke Bawah Sesuai Asli)
+                VStack {
+                    Spacer()
+                    HStack(spacing: 12) {
+                        Image(systemName: "magnifyingglass")
+                            .foregroundColor(Color.white.opacity(0.6))
+                            .font(.system(size: 16, weight: .semibold))
+                        
+                        TextField("Cari", text: $searchText)
+                            .font(.system(size: 16))
+                            .foregroundColor(.white)
+                        
+                        Image(systemName: "mic.fill")
+                            .foregroundColor(Color.white.opacity(0.6))
+                            .font(.system(size: 16))
+                    }
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 13)
+                    .background(
+                        RoundedRectangle(cornerRadius: 28, style: .continuous)
+                            .fill(Color(white: 0.15, opacity: 0.50))
+                            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 28, style: .continuous))
+                    )
+                    .padding(.horizontal, 16)
+                    .padding(.bottom, 2)
                 }
-                .padding(.horizontal, 16)
-                .padding(.vertical, 13)
-                .background(
-                    RoundedRectangle(cornerRadius: 28, style: .continuous)
-                        .fill(Color(white: 0.15, opacity: 0.45))
-                        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 28, style: .continuous))
-                )
-                .padding(.horizontal, 16)
-                .padding(.bottom, 24)
+                .ignoresSafeArea(.keyboard, edges: .bottom)
             }
         }
     }
@@ -399,12 +423,7 @@ struct GeneralSettingsView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 16) {
-                HStack {
-                    SingleCircleBackButton { path.removeLast() }
-                    Spacer()
-                }
-                .padding(.horizontal, 16)
-                .padding(.top, 8)
+                StandardHeader(title: "") { path.removeLast() }
                 
                 // Header Penjelasan Umum
                 VStack(alignment: .leading, spacing: 10) {
@@ -653,22 +672,14 @@ struct GeneralSettingsView: View {
     }
 }
 
-// View Halaman "Mengenai" (SEID dengan Panah & EID di Bawah)
+// View Halaman "Mengenai"
 struct AboutSettingsView: View {
     @Binding var path: NavigationPath
     
     var body: some View {
         ScrollView {
             VStack(spacing: 16) {
-                HStack {
-                    SingleCircleBackButton { path.removeLast() }
-                    Spacer()
-                    Text("Mengenai").font(.system(size: 17, weight: .semibold)).foregroundColor(.white)
-                    Spacer()
-                    Spacer().frame(width: 32)
-                }
-                .padding(.horizontal, 16)
-                .padding(.top, 8)
+                StandardHeader(title: "Mengenai") { path.removeLast() }
                 
                 VStack(spacing: 0) {
                     HStack { Text("Nama"); Spacer(); Text("iphone").foregroundColor(.gray) }.padding(.vertical, 12)
@@ -709,7 +720,6 @@ struct AboutSettingsView: View {
                 }
                 .iOSGroupedContainer()
                 
-                // Bagian SEID (Dengan Panah) & EID (Angka di Bawah)
                 VStack(spacing: 0) {
                     HStack { Text("Alamat Wi-Fi"); Spacer(); Text("B8:01:1F:BA:90:38").foregroundColor(.gray) }.padding(.vertical, 12)
                     Divider().background(Color(white: 0.2))
@@ -717,17 +727,13 @@ struct AboutSettingsView: View {
                     Divider().background(Color(white: 0.2))
                     HStack { Text("Firmware Modem"); Spacer(); Text("1.60.02").foregroundColor(.gray) }.padding(.vertical, 12)
                     Divider().background(Color(white: 0.2))
-                    
-                    // SEID dengan Panah Kanan Sesuai Asli
                     HStack {
                         Text("SEID").foregroundColor(.white)
                         Spacer()
                         Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
                     }.padding(.vertical, 12)
-                    
                     Divider().background(Color(white: 0.2))
                     
-                    // EID dengan Angka di Bawah Sesuai Asli
                     VStack(alignment: .leading, spacing: 4) {
                         Text("EID").foregroundColor(.white)
                         Text("89049032020008884800234954216871")
@@ -784,15 +790,7 @@ struct VPNManagementView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 16) {
-                HStack {
-                    SingleCircleBackButton { path.removeLast() }
-                    Spacer()
-                    Text("Manajemen VPN & Perangkat").font(.system(size: 16, weight: .semibold)).foregroundColor(.white)
-                    Spacer()
-                    Spacer().frame(width: 32)
-                }
-                .padding(.horizontal, 16)
-                .padding(.top, 8)
+                StandardHeader(title: "Manajemen VPN & Perangkat") { path.removeLast() }
                 
                 VStack(spacing: 0) {
                     HStack {
@@ -830,15 +828,7 @@ struct CertificateTrustView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 6) {
-                HStack {
-                    SingleCircleBackButton { path.removeLast() }
-                    Spacer()
-                    Text("Pengaturan Kepercayaan Sertifikat").font(.system(size: 15, weight: .semibold)).foregroundColor(.white)
-                    Spacer()
-                    Spacer().frame(width: 32)
-                }
-                .padding(.horizontal, 16)
-                .padding(.top, 8)
+                StandardHeader(title: "Pengaturan Kepercayaan Sertifikat") { path.removeLast() }
                 
                 VStack(spacing: 0) {
                     HStack {
