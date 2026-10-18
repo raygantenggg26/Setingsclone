@@ -21,7 +21,8 @@ jobs:
           mkdir -p build/SettingsClone.app
 
           swiftc -sdk $(xcrun --sdk iphoneos --show-sdk-path) \
-                 -target arm64-apple-ios15.0 \
+                 -target arm64-apple-ios16.0 \
+                 -parse-as-library \
                  -emit-executable \
                  -o build/SettingsClone.app/SettingsClone \
                  Sources/main.swift
