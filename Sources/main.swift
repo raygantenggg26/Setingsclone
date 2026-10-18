@@ -1,24 +1,6 @@
 import SwiftUI
 
-// Logo Bluetooth Asli & Sempurna
-struct OfficialBluetoothLogo: Shape {
-    func path(in rect: CGRect) -> Path {
-        var path = Path()
-        let w = rect.width
-        let h = rect.height
-        
-        path.move(to: CGPoint(x: w * 0.32, y: h * 0.24))
-        path.addLine(to: CGPoint(x: w * 0.68, y: h * 0.50))
-        path.addLine(to: CGPoint(x: w * 0.50, y: h * 0.12))
-        path.addLine(to: CGPoint(x: w * 0.50, y: h * 0.88))
-        path.addLine(to: CGPoint(x: w * 0.68, y: h * 0.50))
-        path.addLine(to: CGPoint(x: w * 0.32, y: h * 0.76))
-        
-        return path
-    }
-}
-
-// Tombol Kembali Lingkaran Transparan Bersih (Tanpa Dobel)
+// Tombol Kembali Lingkaran Transparan Bersih (Tanpa Dobel / 100% Bersih)
 struct CircleBackButton: View {
     @Environment(\.dismiss) var dismiss
     
@@ -28,13 +10,14 @@ struct CircleBackButton: View {
         }) {
             ZStack {
                 Circle()
-                    .fill(Color(white: 0.25).opacity(0.45))
+                    .fill(Color.white.opacity(0.12))
                     .frame(width: 32, height: 32)
                 Image(systemName: "chevron.left")
-                    .font(.system(size: 14, weight: .bold))
+                    .font(.system(size: 14, weight: .semibold))
                     .foregroundColor(.white)
             }
         }
+        .buttonStyle(PlainButtonStyle())
     }
 }
 
@@ -142,7 +125,8 @@ struct SettingsMainView: View {
                             Divider().background(Color(white: 0.2))
                             
                             HStack {
-                                CustomBluetoothIcon()
+                                // Menggunakan Ikon Bluetooth Standar iOS yang Dijamin Tampil Sempurna
+                                SettingsIcon(systemName: "bluetooth", backgroundColor: .blue)
                                 Text("Bluetooth").font(.system(size: 16)).foregroundColor(.white)
                                 Spacer()
                                 Text("Tidak Terhubung").font(.system(size: 15)).foregroundColor(Color(white: 0.45))
@@ -340,12 +324,12 @@ struct SettingsMainView: View {
                         }
                         .iOSGroupedContainer()
                         
-                        Spacer().frame(height: 95)
+                        Spacer().frame(height: 105)
                     }
                 }
                 .navigationTitle("Pengaturan")
                 
-                // Floating Search Bar Bottom (Lebih Turun & Transparan Kaca Penuh)
+                // Floating Search Bar Bottom (Diturunkan dan Dibuat Transparan Kaca Penuh)
                 HStack(spacing: 12) {
                     Image(systemName: "magnifyingglass")
                         .foregroundColor(Color.white.opacity(0.6))
@@ -363,29 +347,13 @@ struct SettingsMainView: View {
                 .padding(.vertical, 13)
                 .background(
                     RoundedRectangle(cornerRadius: 28, style: .continuous)
-                        .fill(Color(white: 0.12, opacity: 0.40))
+                        .fill(Color.black.opacity(0.25))
                         .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 28, style: .continuous))
                 )
                 .padding(.horizontal, 16)
-                .padding(.bottom, 16)
+                .padding(.bottom, 22)
             }
         }
-    }
-}
-
-// Ikon Bluetooth Proporsional
-struct CustomBluetoothIcon: View {
-    var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 7, style: .continuous)
-                .fill(Color(red: 0.0, green: 0.48, blue: 1.0))
-                .frame(width: 29, height: 29)
-            
-            OfficialBluetoothLogo()
-                .stroke(Color.white, style: StrokeStyle(lineWidth: 2.8, lineCap: .round, lineJoin: .round))
-                .frame(width: 13, height: 18)
-        }
-        .padding(.trailing, 6)
     }
 }
 
@@ -482,18 +450,10 @@ struct GeneralSettingsView: View {
                 }
                 .iOSGroupedContainer()
                 
-                // SECTION 3 (Logo AirDrop Sempurna)
+                // SECTION 3 (Logo AirDrop Sempurna Tanpa Putih Polos)
                 VStack(spacing: 0) {
                     HStack {
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 7, style: .continuous)
-                                .fill(Color.blue)
-                                .frame(width: 29, height: 29)
-                            Image(systemName: "airdrop")
-                                .font(.system(size: 14, weight: .medium))
-                                .foregroundColor(.white)
-                        }
-                        .padding(.trailing, 6)
+                        SettingsIcon(systemName: "wifi.router.fill", backgroundColor: .blue)
                         Text("AirDrop").foregroundColor(.white).font(.system(size: 16))
                         Spacer()
                         Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
@@ -613,7 +573,7 @@ struct GeneralSettingsView: View {
                 }
                 .iOSGroupedContainer()
                 
-                // SECTION 6 (Logo VPN Sama / Jaringan)
+                // SECTION 6
                 VStack(spacing: 0) {
                     NavigationLink(destination: VPNManagementView()) {
                         HStack {
@@ -627,7 +587,7 @@ struct GeneralSettingsView: View {
                 }
                 .iOSGroupedContainer()
                 
-                // SECTION 7 (Legal Terpisah)
+                // SECTION 7
                 VStack(spacing: 0) {
                     HStack {
                         SettingsIcon(systemName: "doc.text.fill", backgroundColor: .gray)
@@ -638,7 +598,7 @@ struct GeneralSettingsView: View {
                 }
                 .iOSGroupedContainer()
                 
-                // SECTION 8 (Transfer Terpisah)
+                // SECTION 8
                 VStack(spacing: 0) {
                     HStack {
                         SettingsIcon(systemName: "iphone.gen3", backgroundColor: .blue)
@@ -676,26 +636,26 @@ struct GeneralSettingsView: View {
     }
 }
 
-// Menu "Mengenai" (Garansi Tanggal di Bawah & Nama "iphone")
+// Menu "Mengenai" (Proporsi Baris Lagu/Video/Foto Dibuat Lebih Berisi & Rapi)
 struct AboutSettingsView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 16) {
                 VStack(spacing: 0) {
-                    HStack { Text("Nama"); Spacer(); Text("iphone").foregroundColor(.gray) }.padding(.vertical, 11)
+                    HStack { Text("Nama"); Spacer(); Text("iphone").foregroundColor(.gray) }.padding(.vertical, 12)
                     Divider().background(Color(white: 0.2))
-                    HStack { Text("Versi iOS"); Spacer(); Text("26.5").foregroundColor(.gray) }.padding(.vertical, 11)
+                    HStack { Text("Versi iOS"); Spacer(); Text("26.5").foregroundColor(.gray) }.padding(.vertical, 12)
                     Divider().background(Color(white: 0.2))
-                    HStack { Text("Nama Model"); Spacer(); Text("iPhone 17 Pro Max").foregroundColor(.gray) }.padding(.vertical, 11)
+                    HStack { Text("Nama Model"); Spacer(); Text("iPhone 17 Pro Max").foregroundColor(.gray) }.padding(.vertical, 12)
                     Divider().background(Color(white: 0.2))
-                    HStack { Text("Nomor Model"); Spacer(); Text("MFYP4PA/A").foregroundColor(.gray) }.padding(.vertical, 11)
+                    HStack { Text("Nomor Model"); Spacer(); Text("MFYP4PA/A").foregroundColor(.gray) }.padding(.vertical, 12)
                     Divider().background(Color(white: 0.2))
-                    HStack { Text("Nomor Seri"); Spacer(); Text("KJX6WK6357").foregroundColor(.gray) }.padding(.vertical, 11)
+                    HStack { Text("Nomor Seri"); Spacer(); Text("KJX6WK6357").foregroundColor(.gray) }.padding(.vertical, 12)
                 }
                 .iOSGroupedContainer()
                 .padding(.top, 4)
                 
-                // GARANSI TERBATAS (Tanggal di Bawah, Kotak Lebih Gemuk Sesuai Asli)
+                // GARANSI TERBATAS (Tanggal di Bawah, Kotak Lebih Proporsional)
                 VStack(alignment: .leading, spacing: 6) {
                     Text("Garansi Terbatas")
                         .foregroundColor(.white)
@@ -711,50 +671,50 @@ struct AboutSettingsView: View {
                 .clipShape(RoundedRectangle(cornerRadius: 24, style: .continuous))
                 .padding(.horizontal, 16)
                 
-                // MEDIA & KAPASITAS (Lebih Berisi/Gemuk Pas)
+                // MEDIA & KAPASITAS (Diperlebar paddingnya agar mirip aslinya)
                 VStack(spacing: 0) {
-                    HStack { Text("Lagu"); Spacer(); Text("0").foregroundColor(.gray) }.padding(.vertical, 11)
+                    HStack { Text("Lagu"); Spacer(); Text("0").foregroundColor(.gray) }.padding(.vertical, 12)
                     Divider().background(Color(white: 0.2))
-                    HStack { Text("Video"); Spacer(); Text("1.029").foregroundColor(.gray) }.padding(.vertical, 11)
+                    HStack { Text("Video"); Spacer(); Text("1.029").foregroundColor(.gray) }.padding(.vertical, 12)
                     Divider().background(Color(white: 0.2))
-                    HStack { Text("Foto"); Spacer(); Text("7.862").foregroundColor(.gray) }.padding(.vertical, 11)
+                    HStack { Text("Foto"); Spacer(); Text("7.862").foregroundColor(.gray) }.padding(.vertical, 12)
                     Divider().background(Color(white: 0.2))
-                    HStack { Text("Aplikasi"); Spacer(); Text("39").foregroundColor(.gray) }.padding(.vertical, 11)
+                    HStack { Text("Aplikasi"); Spacer(); Text("39").foregroundColor(.gray) }.padding(.vertical, 12)
                     Divider().background(Color(white: 0.2))
-                    HStack { Text("Kapasitas"); Spacer(); Text("256 GB").foregroundColor(.gray) }.padding(.vertical, 11)
+                    HStack { Text("Kapasitas"); Spacer(); Text("256 GB").foregroundColor(.gray) }.padding(.vertical, 12)
                     Divider().background(Color(white: 0.2))
-                    HStack { Text("Tersedia"); Spacer(); Text("157,19 GB").foregroundColor(.gray) }.padding(.vertical, 11)
+                    HStack { Text("Tersedia"); Spacer(); Text("157,19 GB").foregroundColor(.gray) }.padding(.vertical, 12)
                 }
                 .iOSGroupedContainer()
                 
                 VStack(spacing: 0) {
-                    HStack { Text("Alamat Wi-Fi"); Spacer(); Text("B8:01:1F:BA:90:38").foregroundColor(.gray) }.padding(.vertical, 11)
+                    HStack { Text("Alamat Wi-Fi"); Spacer(); Text("B8:01:1F:BA:90:38").foregroundColor(.gray) }.padding(.vertical, 12)
                     Divider().background(Color(white: 0.2))
-                    HStack { Text("Bluetooth"); Spacer(); Text("B8:01:1F:B8:D8:67").foregroundColor(.gray) }.padding(.vertical, 11)
+                    HStack { Text("Bluetooth"); Spacer(); Text("B8:01:1F:B8:D8:67").foregroundColor(.gray) }.padding(.vertical, 12)
                     Divider().background(Color(white: 0.2))
-                    HStack { Text("Firmware Modem"); Spacer(); Text("1.60.02").foregroundColor(.gray) }.padding(.vertical, 11)
+                    HStack { Text("Firmware Modem"); Spacer(); Text("1.60.02").foregroundColor(.gray) }.padding(.vertical, 12)
                     Divider().background(Color(white: 0.2))
-                    HStack { Text("SEID"); Spacer(); Text("").foregroundColor(.gray) }.padding(.vertical, 11)
+                    HStack { Text("SEID"); Spacer(); Text("").foregroundColor(.gray) }.padding(.vertical, 12)
                     Divider().background(Color(white: 0.2))
-                    HStack { Text("EID"); Spacer(); Text("89049032020008884800234954216871").font(.system(size: 13)).foregroundColor(.gray) }.padding(.vertical, 11)
+                    HStack { Text("EID"); Spacer(); Text("89049032020008884800234954216871").font(.system(size: 13)).foregroundColor(.gray) }.padding(.vertical, 12)
                     Divider().background(Color(white: 0.2))
-                    HStack { Text("Kunci Operator"); Spacer(); Text("Tidak ada pembatasan SIM").foregroundColor(.gray) }.padding(.vertical, 11)
+                    HStack { Text("Kunci Operator"); Spacer(); Text("Tidak ada pembatasan SIM").foregroundColor(.gray) }.padding(.vertical, 12)
                 }
                 .iOSGroupedContainer()
                 
                 VStack(spacing: 0) {
-                    HStack { Text("Jaringan"); Spacer(); Text("INDOSATOOREDOO").foregroundColor(.gray) }.padding(.vertical, 11)
+                    HStack { Text("Jaringan"); Spacer(); Text("INDOSATOOREDOO").foregroundColor(.gray) }.padding(.vertical, 12)
                     Divider().background(Color(white: 0.2))
-                    HStack { Text("Operator"); Spacer(); Text("INDOSAT 70.0").foregroundColor(.gray) }.padding(.vertical, 11)
+                    HStack { Text("Operator"); Spacer(); Text("INDOSAT 70.0").foregroundColor(.gray) }.padding(.vertical, 12)
                     Divider().background(Color(white: 0.2))
-                    HStack { Text("IMEI"); Spacer(); Text("35 260231 063492 5").foregroundColor(.gray) }.padding(.vertical, 11)
+                    HStack { Text("IMEI"); Spacer(); Text("35 260231 063492 5").foregroundColor(.gray) }.padding(.vertical, 12)
                     Divider().background(Color(white: 0.2))
-                    HStack { Text("ICCID"); Spacer(); Text("89620130003168785752").font(.system(size: 13)).foregroundColor(.gray) }.padding(.vertical, 11)
+                    HStack { Text("ICCID"); Spacer(); Text("89620130003168785752").font(.system(size: 13)).foregroundColor(.gray) }.padding(.vertical, 12)
                 }
                 .iOSGroupedContainer()
                 
                 VStack(spacing: 0) {
-                    HStack { Text("IMEI2"); Spacer(); Text("35 260231 067993 8").foregroundColor(.gray) }.padding(.vertical, 11)
+                    HStack { Text("IMEI2"); Spacer(); Text("35 260231 067993 8").foregroundColor(.gray) }.padding(.vertical, 12)
                 }
                 .iOSGroupedContainer()
                 
@@ -766,7 +726,7 @@ struct AboutSettingsView: View {
                             Spacer()
                             Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
                         }
-                        .padding(.vertical, 11)
+                        .padding(.vertical, 12)
                     }
                 }
                 .iOSGroupedContainer()
@@ -798,7 +758,7 @@ struct VPNManagementView: View {
                         Text("Tidak Terhubung").foregroundColor(.gray)
                         Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
                     }
-                    .padding(.vertical, 11)
+                    .padding(.vertical, 12)
                 }
                 .iOSGroupedContainer()
                 .padding(.top, 4)
@@ -810,7 +770,7 @@ struct VPNManagementView: View {
                             .foregroundColor(.blue)
                         Spacer()
                     }
-                    .padding(.vertical, 11)
+                    .padding(.vertical, 12)
                 }
                 .iOSGroupedContainer()
             }
@@ -839,7 +799,7 @@ struct CertificateTrustView: View {
                         Spacer()
                         Text("2026040100").foregroundColor(.gray)
                     }
-                    .padding(.vertical, 11)
+                    .padding(.vertical, 12)
                     
                     Divider().background(Color(white: 0.2))
                     
@@ -848,7 +808,7 @@ struct CertificateTrustView: View {
                         Spacer()
                         Text("1013").foregroundColor(.gray)
                     }
-                    .padding(.vertical, 11)
+                    .padding(.vertical, 12)
                 }
                 .iOSGroupedContainer()
                 .padding(.top, 4)
