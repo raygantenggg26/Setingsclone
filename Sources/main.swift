@@ -40,7 +40,7 @@ struct CircleBackButton: View {
 
 // Modifikator Kotak "Gemuk, Berisi, & Melengkung Sempurna" (Squircle Radius 34pt)
 struct iOSGroupModifier: ViewModifier {
-    func body(content: Content) -> View {
+    func body(content: Content) -> some View {
         content
             .padding(.horizontal, 16)
             .padding(.vertical, 12)
