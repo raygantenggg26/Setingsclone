@@ -63,9 +63,9 @@ struct SettingsMainView: View {
                 Color.black.ignoresSafeArea()
                 
                 ScrollView {
-                    VStack(spacing: 24) { // Spacing direnggangkan antar kelompok
+                    VStack(spacing: 24) {
                         
-                        // Profil Akun Apple
+                        // Profil Akun Apple (Dibuat sedikit lebih gemuk)
                         HStack(spacing: 16) {
                             Circle()
                                 .fill(LinearGradient(
@@ -75,7 +75,7 @@ struct SettingsMainView: View {
                                 ))
                                 .frame(width: 58, height: 58)
                             
-                            VStack(alignment: .leading, spacing: 2) {
+                            VStack(alignment: .leading, spacing: 3) {
                                 Text("Dimas Saputra")
                                     .font(.system(size: 19, weight: .semibold))
                                     .foregroundColor(.white)
@@ -88,11 +88,11 @@ struct SettingsMainView: View {
                                 .font(.system(size: 13, weight: .semibold))
                                 .foregroundColor(Color(white: 0.35))
                         }
-                        .padding(.vertical, 4)
+                        .padding(.vertical, 10) // Tambah padding agar lebih gemuk
                         .iOSGroupedContainer()
                         .padding(.top, 4)
                         
-                        // Banner iOS Update
+                        // Banner iOS Update (Dibuat sedikit lebih gemuk)
                         HStack {
                             Text("Perbarui ke iOS 27.0.1")
                                 .font(.system(size: 16))
@@ -106,7 +106,7 @@ struct SettingsMainView: View {
                                 .font(.system(size: 13, weight: .semibold))
                                 .foregroundColor(Color(white: 0.35))
                         }
-                        .padding(.vertical, 8)
+                        .padding(.vertical, 11) // Tambah padding agar lebih gemuk
                         .iOSGroupedContainer()
                         
                         // Group Konektivitas
@@ -124,7 +124,7 @@ struct SettingsMainView: View {
                                 SettingsIcon(systemName: "wifi", backgroundColor: .blue)
                                 Text("Wi-Fi").font(.system(size: 16)).foregroundColor(.white)
                                 Spacer()
-                                Text("AWS D ROKET").font(.system(size: 15)).foregroundColor(Color(white: 0.45))
+                                Text("Tidak Terhubung").font(.system(size: 15)).foregroundColor(Color(white: 0.45)) // Diubah ke Tidak Terhubung
                                 Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
                             }.padding(.vertical, 8)
                             
@@ -327,7 +327,7 @@ struct SettingsMainView: View {
                     }
                 }
                 
-                // Floating Search Bar Bottom (Ditentukan diturunkan sedikit lebih dekat ke dasar layar)
+                // Floating Search Bar Bottom (Diturunkan sedikit lagi)
                 VStack(spacing: 0) {
                     Spacer()
                     HStack(spacing: 12) {
@@ -351,7 +351,7 @@ struct SettingsMainView: View {
                             .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 26, style: .continuous))
                     )
                     .padding(.horizontal, 16)
-                    .padding(.bottom, -6) // Diturunkan lebih pas ke dasar layar
+                    .padding(.bottom, -12) // Diturunkan lagi dikit
                 }
                 .ignoresSafeArea(.keyboard, edges: .bottom)
             }
@@ -383,10 +383,9 @@ struct GeneralSettingsView: View {
     
     var body: some View {
         ScrollView {
-            // Spacing ditingkatkan menjadi 32 agar jarak hitam pemisah antar-kotak direnggangkan sempurna
             VStack(spacing: 32) {
                 
-                // Header Penjelasan Umum (Kotak diperbesar padding vertikal & horizontalnya)
+                // Header Penjelasan Umum
                 VStack(alignment: .leading, spacing: 12) {
                     ZStack {
                         RoundedRectangle(cornerRadius: 12, style: .continuous)
@@ -398,7 +397,7 @@ struct GeneralSettingsView: View {
                     }
                     
                     Text("Umum")
-                        .font(.system(size: 28, weight: .bold)) // Ukuran judul diperbesar pas
+                        .font(.system(size: 28, weight: .bold))
                         .foregroundColor(.white)
                     
                     Text("Kelola seluruh pengaturan dan preferensi Anda untuk iPhone, seperti pembaruan perangkat lunak, bahasa perangkat, CarPlay, AirDrop, dan lainnya.")
@@ -407,7 +406,7 @@ struct GeneralSettingsView: View {
                         .lineSpacing(3)
                 }
                 .padding(.horizontal, 20)
-                .padding(.vertical, 22) // Kotak diperbesar di bagian luar
+                .padding(.vertical, 22)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .background(Color(red: 0.11, green: 0.11, blue: 0.12))
                 .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
@@ -616,7 +615,7 @@ struct GeneralSettingsView: View {
                 }
                 .iOSGroupedContainer()
                 
-                // Tombol Matikan Biru (Rata Kiri)
+                // Tombol Matikan Biru
                 HStack {
                     Button(action: {}) {
                         Text("Matikan")
