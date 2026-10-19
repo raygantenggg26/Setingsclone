@@ -63,7 +63,7 @@ struct SettingsMainView: View {
                 Color.black.ignoresSafeArea()
                 
                 ScrollView {
-                    VStack(spacing: 20) {
+                    VStack(spacing: 24) { // Spacing direnggangkan antar kelompok
                         
                         // Profil Akun Apple
                         HStack(spacing: 16) {
@@ -327,7 +327,7 @@ struct SettingsMainView: View {
                     }
                 }
                 
-                // Floating Search Bar Bottom
+                // Floating Search Bar Bottom (Ditentukan diturunkan sedikit lebih dekat ke dasar layar)
                 VStack(spacing: 0) {
                     Spacer()
                     HStack(spacing: 12) {
@@ -351,7 +351,7 @@ struct SettingsMainView: View {
                             .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 26, style: .continuous))
                     )
                     .padding(.horizontal, 16)
-                    .padding(.bottom, 2)
+                    .padding(.bottom, -6) // Diturunkan lebih pas ke dasar layar
                 }
                 .ignoresSafeArea(.keyboard, edges: .bottom)
             }
@@ -383,33 +383,34 @@ struct GeneralSettingsView: View {
     
     var body: some View {
         ScrollView {
-            // Spacing ditingkatkan menjadi 24 agar jarak antar-kotak/grup renggang dan luas persis seperti aslinya
-            VStack(spacing: 24) {
+            // Spacing ditingkatkan menjadi 32 agar jarak hitam pemisah antar-kotak direnggangkan sempurna
+            VStack(spacing: 32) {
                 
-                // Header Penjelasan Umum (Kotak header utama dan ukuran judul diperbesar proporsional)
-                VStack(alignment: .leading, spacing: 10) {
+                // Header Penjelasan Umum (Kotak diperbesar padding vertikal & horizontalnya)
+                VStack(alignment: .leading, spacing: 12) {
                     ZStack {
                         RoundedRectangle(cornerRadius: 12, style: .continuous)
                             .fill(Color(white: 0.22))
-                            .frame(width: 56, height: 56)
+                            .frame(width: 58, height: 58)
                         Image(systemName: "gear")
-                            .font(.system(size: 30))
+                            .font(.system(size: 32))
                             .foregroundColor(.white)
                     }
                     
                     Text("Umum")
-                        .font(.system(size: 26, weight: .bold)) // Ukuran judul diperbesar persis asli
+                        .font(.system(size: 28, weight: .bold)) // Ukuran judul diperbesar pas
                         .foregroundColor(.white)
                     
                     Text("Kelola seluruh pengaturan dan preferensi Anda untuk iPhone, seperti pembaruan perangkat lunak, bahasa perangkat, CarPlay, AirDrop, dan lainnya.")
                         .font(.system(size: 14))
                         .foregroundColor(Color(white: 0.60))
-                        .lineSpacing(2)
+                        .lineSpacing(3)
                 }
-                .padding(18)
+                .padding(.horizontal, 20)
+                .padding(.vertical, 22) // Kotak diperbesar di bagian luar
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .background(Color(red: 0.11, green: 0.11, blue: 0.12))
-                .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+                .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
                 .padding(.horizontal, 16)
                 .padding(.top, 8)
                 
@@ -644,7 +645,7 @@ struct AboutSettingsView: View {
     
     var body: some View {
         ScrollView {
-            VStack(spacing: 20) {
+            VStack(spacing: 24) {
                 VStack(spacing: 0) {
                     HStack { Text("Nama"); Spacer(); Text("iphone").foregroundColor(.gray) }.padding(.vertical, 10)
                     Divider().background(Color(white: 0.2))
@@ -762,7 +763,7 @@ struct VPNManagementView: View {
     
     var body: some View {
         ScrollView {
-            VStack(spacing: 20) {
+            VStack(spacing: 24) {
                 VStack(spacing: 0) {
                     HStack {
                         SettingsIcon(systemName: "network", backgroundColor: .blue)
