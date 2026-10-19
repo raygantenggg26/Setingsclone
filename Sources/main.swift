@@ -33,14 +33,14 @@ struct BluetoothShape: Shape {
     }
 }
 
-// MARK: - Modifier Grouped Container iOS (Ditingkatkan Proporsinya)
+// MARK: - Modifier Grouped Container iOS
 struct iOSGroupModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .padding(.horizontal, 16)
-            .padding(.vertical, 4) // Padding vertikal diperramping agar tidak terlalu gemuk
+            .padding(.vertical, 4)
             .background(Color(red: 0.11, green: 0.11, blue: 0.12))
-            .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous)) // Radius disesuaikan dengan iOS asli
+            .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
             .padding(.horizontal, 16)
     }
 }
@@ -63,7 +63,7 @@ struct SettingsMainView: View {
                 Color.black.ignoresSafeArea()
                 
                 ScrollView {
-                    VStack(spacing: 12) { // Spacing antar kelompok disesuaikan
+                    VStack(spacing: 20) {
                         
                         // Profil Akun Apple
                         HStack(spacing: 16) {
@@ -327,13 +327,13 @@ struct SettingsMainView: View {
                     }
                 }
                 
-                // Floating Search Bar Bottom (Mengambang Transparan Khas iOS)
+                // Floating Search Bar Bottom
                 VStack(spacing: 0) {
                     Spacer()
                     HStack(spacing: 12) {
                         Image(systemName: "magnifyingglass")
                             .foregroundColor(Color.white.opacity(0.6))
-                            .font(.system(size: 16, weight: .semibold))
+                            .font(.system(size: 17, weight: .semibold))
                         
                         TextField("Cari", text: $searchText)
                             .font(.system(size: 16))
@@ -341,17 +341,17 @@ struct SettingsMainView: View {
                         
                         Image(systemName: "mic.fill")
                             .foregroundColor(Color.white.opacity(0.6))
-                            .font(.system(size: 16))
+                            .font(.system(size: 17))
                     }
                     .padding(.horizontal, 16)
-                    .padding(.vertical, 10)
+                    .padding(.vertical, 12)
                     .background(
                         RoundedRectangle(cornerRadius: 26, style: .continuous)
-                            .fill(Color.white.opacity(0.12)) // Efek bening transparan
+                            .fill(Color.white.opacity(0.12))
                             .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 26, style: .continuous))
                     )
                     .padding(.horizontal, 16)
-                    .padding(.bottom, 12) // Mengambang pas di atas margin bawah
+                    .padding(.bottom, 2)
                 }
                 .ignoresSafeArea(.keyboard, edges: .bottom)
             }
@@ -383,20 +383,22 @@ struct GeneralSettingsView: View {
     
     var body: some View {
         ScrollView {
-            VStack(spacing: 12) { // Spacing antarkelompok disesuaikan
-                // Header Penjelasan Umum
+            // Spacing ditingkatkan menjadi 24 agar jarak antar-kotak/grup renggang dan luas persis seperti aslinya
+            VStack(spacing: 24) {
+                
+                // Header Penjelasan Umum (Kotak header utama dan ukuran judul diperbesar proporsional)
                 VStack(alignment: .leading, spacing: 10) {
                     ZStack {
                         RoundedRectangle(cornerRadius: 12, style: .continuous)
                             .fill(Color(white: 0.22))
-                            .frame(width: 52, height: 52)
+                            .frame(width: 56, height: 56)
                         Image(systemName: "gear")
-                            .font(.system(size: 28))
+                            .font(.system(size: 30))
                             .foregroundColor(.white)
                     }
                     
                     Text("Umum")
-                        .font(.system(size: 22, weight: .bold))
+                        .font(.system(size: 26, weight: .bold)) // Ukuran judul diperbesar persis asli
                         .foregroundColor(.white)
                     
                     Text("Kelola seluruh pengaturan dan preferensi Anda untuk iPhone, seperti pembaruan perangkat lunak, bahasa perangkat, CarPlay, AirDrop, dan lainnya.")
@@ -404,10 +406,10 @@ struct GeneralSettingsView: View {
                         .foregroundColor(Color(white: 0.60))
                         .lineSpacing(2)
                 }
-                .padding(16)
+                .padding(18)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .background(Color(red: 0.11, green: 0.11, blue: 0.12))
-                .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+                .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
                 .padding(.horizontal, 16)
                 .padding(.top, 8)
                 
@@ -566,7 +568,7 @@ struct GeneralSettingsView: View {
                 }
                 .iOSGroupedContainer()
                 
-                // Penyedia TV (Grup Tunggal Ramping)
+                // Penyedia TV
                 VStack(spacing: 0) {
                     HStack {
                         SettingsIcon(systemName: "tv", backgroundColor: .orange)
@@ -577,7 +579,7 @@ struct GeneralSettingsView: View {
                 }
                 .iOSGroupedContainer()
                 
-                // Manajemen VPN & Perangkat (Grup Tunggal Ramping)
+                // Manajemen VPN & Perangkat
                 VStack(spacing: 0) {
                     Button(action: { path.append("VPN") }) {
                         HStack {
@@ -591,7 +593,7 @@ struct GeneralSettingsView: View {
                 }
                 .iOSGroupedContainer()
                 
-                // Legal & Pengatur (Grup Tunggal Ramping)
+                // Legal & Pengatur
                 VStack(spacing: 0) {
                     HStack {
                         SettingsIcon(systemName: "doc.text.fill", backgroundColor: .gray)
@@ -602,7 +604,7 @@ struct GeneralSettingsView: View {
                 }
                 .iOSGroupedContainer()
                 
-                // Transfer atau Atur Ulang iPhone (Grup Tunggal Ramping)
+                // Transfer atau Atur Ulang iPhone
                 VStack(spacing: 0) {
                     HStack {
                         SettingsIcon(systemName: "iphone.gen3", backgroundColor: .blue)
@@ -642,7 +644,7 @@ struct AboutSettingsView: View {
     
     var body: some View {
         ScrollView {
-            VStack(spacing: 12) {
+            VStack(spacing: 20) {
                 VStack(spacing: 0) {
                     HStack { Text("Nama"); Spacer(); Text("iphone").foregroundColor(.gray) }.padding(.vertical, 10)
                     Divider().background(Color(white: 0.2))
@@ -760,7 +762,7 @@ struct VPNManagementView: View {
     
     var body: some View {
         ScrollView {
-            VStack(spacing: 12) {
+            VStack(spacing: 20) {
                 VStack(spacing: 0) {
                     HStack {
                         SettingsIcon(systemName: "network", backgroundColor: .blue)
