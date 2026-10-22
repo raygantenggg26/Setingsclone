@@ -65,7 +65,7 @@ struct SettingsMainView: View {
                 ScrollView {
                     VStack(spacing: 24) {
                         
-                        // Profil Akun Apple (Dibuat sedikit lebih gemuk)
+                        // Profil Akun Apple
                         HStack(spacing: 16) {
                             Circle()
                                 .fill(LinearGradient(
@@ -88,11 +88,11 @@ struct SettingsMainView: View {
                                 .font(.system(size: 13, weight: .semibold))
                                 .foregroundColor(Color(white: 0.35))
                         }
-                        .padding(.vertical, 10) // Tambah padding agar lebih gemuk
+                        .padding(.vertical, 10)
                         .iOSGroupedContainer()
                         .padding(.top, 4)
                         
-                        // Banner iOS Update (Dibuat sedikit lebih gemuk)
+                        // Banner iOS Update
                         HStack {
                             Text("Perbarui ke iOS 27.0.1")
                                 .font(.system(size: 16))
@@ -106,7 +106,7 @@ struct SettingsMainView: View {
                                 .font(.system(size: 13, weight: .semibold))
                                 .foregroundColor(Color(white: 0.35))
                         }
-                        .padding(.vertical, 11) // Tambah padding agar lebih gemuk
+                        .padding(.vertical, 11)
                         .iOSGroupedContainer()
                         
                         // Group Konektivitas
@@ -124,7 +124,7 @@ struct SettingsMainView: View {
                                 SettingsIcon(systemName: "wifi", backgroundColor: .blue)
                                 Text("Wi-Fi").font(.system(size: 16)).foregroundColor(.white)
                                 Spacer()
-                                Text("Tidak Terhubung").font(.system(size: 15)).foregroundColor(Color(white: 0.45)) // Diubah ke Tidak Terhubung
+                                Text("Tidak Terhubung").font(.system(size: 15)).foregroundColor(Color(white: 0.45))
                                 Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
                             }.padding(.vertical, 8)
                             
@@ -327,7 +327,7 @@ struct SettingsMainView: View {
                     }
                 }
                 
-                // Floating Search Bar Bottom (Diturunkan sedikit lagi)
+                // Floating Search Bar Bottom
                 VStack(spacing: 0) {
                     Spacer()
                     HStack(spacing: 12) {
@@ -351,7 +351,7 @@ struct SettingsMainView: View {
                             .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 26, style: .continuous))
                     )
                     .padding(.horizontal, 16)
-                    .padding(.bottom, -12) // Diturunkan lagi dikit
+                    .padding(.bottom, -16)
                 }
                 .ignoresSafeArea(.keyboard, edges: .bottom)
             }
@@ -713,28 +713,44 @@ struct AboutSettingsView: View {
                 }
                 .iOSGroupedContainer()
                 
-                VStack(spacing: 0) {
-                    HStack { Text("Jaringan"); Spacer(); Text("INDOSATOOREDOO").foregroundColor(.gray) }.padding(.vertical, 10)
-                    Divider().background(Color(white: 0.2))
-                    HStack { Text("Operator"); Spacer(); Text("INDOSAT 70.0").foregroundColor(.gray) }.padding(.vertical, 10)
-                    Divider().background(Color(white: 0.2))
-                    HStack { Text("IMEI"); Spacer(); Text("35 260231 063492 5").foregroundColor(.gray) }.padding(.vertical, 10)
-                    Divider().background(Color(white: 0.2))
-                    HStack {
-                        Text("ICCID").foregroundColor(.white)
-                        Spacer()
-                        Text("89620130003168785752")
-                            .font(.system(size: 15))
-                            .foregroundColor(.gray)
+                // SIM Fisik Section
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("SIM Fisik")
+                        .font(.system(size: 13, weight: .semibold))
+                        .foregroundColor(Color(white: 0.70))
+                        .padding(.horizontal, 32)
+                    
+                    VStack(spacing: 0) {
+                        HStack { Text("Jaringan"); Spacer(); Text("INDOSATOOREDOO").foregroundColor(.gray) }.padding(.vertical, 10)
+                        Divider().background(Color(white: 0.2))
+                        HStack { Text("Operator"); Spacer(); Text("INDOSAT 70.0").foregroundColor(.gray) }.padding(.vertical, 10)
+                        Divider().background(Color(white: 0.2))
+                        HStack { Text("IMEI"); Spacer(); Text("35 260231 063492 5").foregroundColor(.gray) }.padding(.vertical, 10)
+                        Divider().background(Color(white: 0.2))
+                        HStack {
+                            Text("ICCID").foregroundColor(.white)
+                            Spacer()
+                            Text("89620130003168785752")
+                                .font(.system(size: 15))
+                                .foregroundColor(.gray)
+                        }
+                        .padding(.vertical, 10)
                     }
-                    .padding(.vertical, 10)
+                    .iOSGroupedContainer()
                 }
-                .iOSGroupedContainer()
                 
-                VStack(spacing: 0) {
-                    HStack { Text("IMEI2"); Spacer(); Text("35 260231 067993 8").foregroundColor(.gray) }.padding(.vertical, 10)
+                // SIM yang Tersedia Section
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("SIM yang Tersedia")
+                        .font(.system(size: 13, weight: .semibold))
+                        .foregroundColor(Color(white: 0.70))
+                        .padding(.horizontal, 32)
+                    
+                    VStack(spacing: 0) {
+                        HStack { Text("IMEI2"); Spacer(); Text("35 260231 067993 8").foregroundColor(.gray) }.padding(.vertical, 10)
+                    }
+                    .iOSGroupedContainer()
                 }
-                .iOSGroupedContainer()
                 
                 VStack(spacing: 0) {
                     Button(action: { path.append("Sertifikat") }) {
