@@ -1,5 +1,200 @@
 import SwiftUI
 
+// MARK: - Manager Keamanan PIN Harian
+class SecurityManager: ObservableObject {
+    @Published var isUnlocked: Bool = false
+    
+    // Kata kunci rahasia milik Anda (Ubah string ini sesuai keinginan Anda)
+    private let masterSecretKey = 8821
+    
+    init() {
+        checkDailyUnlockStatus()
+    }
+    
+    // Format tanggal hari ini (YYYY-MM-DD)
+    private var todayDateString: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter.string(from: Date())
+    }
+    
+    // Periksa apakah hari ini sudah pernah unlock
+    func checkDailyUnlockStatus() {
+        let lastUnlockedDate = UserDefaults.standard.string(forKey: "last_unlocked_date") ?? ""
+        if lastUnlockedDate == todayDateString {
+            self.isUnlocked = true
+        } else {
+            self.isUnlocked = false
+        }
+    }
+    
+    // Menghasilkan PIN Valid Khusus Hari Ini
+    func getTodayValidPIN() -> String {
+        let calendar = Calendar.current
+        let date = Date()
+        let day = calendar.component(.day, from: date)
+        let month = calendar.component(.month, from: date)
+        
+        // Rumus PIN Harian: (Tanggal + Bulan) * 7 + MasterKey
+        // PIN akan selalu berukuran 4-6 angka dan berubah setiap hari
+        let calculatedPIN = ((day + month) * 77) + masterSecretKey
+        return String(calculatedPIN.suffix(4)) // Mengambil 4 digit terakhir sebagai PIN
+    }
+    
+    // Verifikasi PIN yang dimasukkan pengguna
+    func verifyPIN(_ inputPIN: String) -> Bool {
+        if inputPIN == getTodayValidPIN() {
+            // Simpan tanggal unlock hari ini
+            UserDefaults.standard.set(todayDateString, forKey: "last_unlocked_date")
+            self.isUnlocked = true
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    // Kunci kembali aplikasi (Optional untuk Testing)
+    func lockApp() {
+        UserDefaults.standard.removeObject(forKey: "last_unlocked_date")
+        self.isUnlocked = false
+    }
+}
+
+// MARK: - Tampilan Layar Kunci PIN (Pin Lock Screen)
+struct PinLockView: View {
+    @ObservedObject var securityManager: SecurityManager
+    @State private var pinInput: String = ""
+    @State private var errorMessage: String = ""
+    @State private var showError: Bool = false
+    
+    var body: some View {
+        ZStack {
+            Color.black.ignoresSafeArea()
+            
+            VStack(spacing: 30) {
+                Spacer()
+                
+                Image(systemName: "lock.shield.fill")
+                    .font(.system(size: 64))
+                    .foregroundColor(.blue)
+                
+                VStack(spacing: 8) {
+                    Text("Aplikasi Terkunci")
+                        .font(.system(size: 24, weight: .bold))
+                        .foregroundColor(.white)
+                    
+                    Text("Masukkan PIN harian untuk mengakses aplikasi")
+                        .font(.system(size: 14))
+                        .foregroundColor(.gray)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, 32)
+                }
+                
+                // Indikator Titik PIN
+                HStack(spacing: 16) {
+                    ForEach(0..<4, id: \.self) { index in
+                        Circle()
+                            .fill(index < pinInput.count ? Color.blue : Color(white: 0.2))
+                            .frame(width: 16, height: 16)
+                    }
+                }
+                .padding(.vertical, 10)
+                
+                if showError {
+                    Text(errorMessage)
+                        .font(.system(size: 13, weight: .medium))
+                        .foregroundColor(.red)
+                }
+                
+                Spacer()
+                
+                // Keypad Angka 0-9
+                VStack(spacing: 16) {
+                    let rows = [
+                        ["1", "2", "3"],
+                        ["4", "5", "6"],
+                        ["7", "8", "9"],
+                        ["", "0", "delete"]
+                    ]
+                    
+                    ForEach(rows, id: \.self) { row in
+                        HStack(spacing: 24) {
+                            ForEach(row, id: \.self) { item in
+                                if item == "delete" {
+                                    Button(action: deleteDigit) {
+                                        Image(systemName: "delete.left.fill")
+                                            .font(.system(size: 22))
+                                            .foregroundColor(.white)
+                                            .frame(width: 72, height: 72)
+                                    }
+                                } else if item.isEmpty {
+                                    Spacer().frame(width: 72, height: 72)
+                                } else {
+                                    Button(action: { appendDigit(item) }) {
+                                        Text(item)
+                                            .font(.system(size: 28, weight: .regular))
+                                            .foregroundColor(.white)
+                                            .frame(width: 72, height: 72)
+                                            .background(Color(white: 0.15))
+                                            .clipShape(Circle())
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                .padding(.bottom, 40)
+            }
+        }
+    }
+    
+    private func appendDigit(_ digit: String) {
+        showError = false
+        if pinInput.count < 4 {
+            pinInput.append(digit)
+            if pinInput.count == 4 {
+                // Autoverifikasi jika sudah 4 digit
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    if !securityManager.verifyPIN(pinInput) {
+                        errorMessage = "PIN Salah atau expired untuk hari ini!"
+                        showError = true
+                        pinInput = ""
+                    }
+                }
+            }
+        }
+    }
+    
+    private func deleteDigit() {
+        showError = false
+        if !pinInput.isEmpty {
+            pinInput.removeLast()
+        }
+    }
+}
+
+// MARK: - Root View dengan Proteksi PIN
+@main
+struct SettingsCloneApp: App {
+    @StateObject private var securityManager = SecurityManager()
+    
+    var body: some Scene {
+        WindowGroup {
+            Group {
+                if securityManager.isUnlocked {
+                    SettingsMainView()
+                } else {
+                    PinLockView(securityManager: securityManager)
+                }
+            }
+            .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
+                // Cek ulang setiap kali app dibuka kembali dari background
+                securityManager.checkDailyUnlockStatus()
+            }
+        }
+    }
+}
+
 // MARK: - Component Icon Bluetooth Resmi Apple
 struct OfficialBluetoothIcon: View {
     var body: some View {
@@ -850,14 +1045,5 @@ struct CertificateTrustView: View {
         .navigationTitle("Pengaturan Kepercayaan Sertifikat")
         .navigationBarTitleDisplayMode(.inline)
         .background(Color.black)
-    }
-}
-
-@main
-struct SettingsCloneApp: App {
-    var body: some Scene {
-        WindowGroup {
-            SettingsMainView()
-        }
     }
 }
