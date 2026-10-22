@@ -4,7 +4,7 @@ import SwiftUI
 class SecurityManager: ObservableObject {
     @Published var isUnlocked: Bool = false
     
-    // Kata kunci rahasia milik Anda (Ubah string ini sesuai keinginan Anda)
+    // Kata kunci rahasia milik Anda
     private let masterSecretKey = 8821
     
     init() {
@@ -28,17 +28,17 @@ class SecurityManager: ObservableObject {
         }
     }
     
-    // Menghasilkan PIN Valid Khusus Hari Ini
+    // Menghasilkan PIN Valid Khusus Hari Ini (Perbaikan Error)
     func getTodayValidPIN() -> String {
         let calendar = Calendar.current
         let date = Date()
         let day = calendar.component(.day, from: date)
         let month = calendar.component(.month, from: date)
         
-        // Rumus PIN Harian: (Tanggal + Bulan) * 7 + MasterKey
-        // PIN akan selalu berukuran 4-6 angka dan berubah setiap hari
+        // Rumus PIN Harian: (Tanggal + Bulan) * 77 + MasterKey
         let calculatedPIN = ((day + month) * 77) + masterSecretKey
-        return String(calculatedPIN.suffix(4)) // Mengambil 4 digit terakhir sebagai PIN
+        let pinString = String(calculatedPIN) // Diubah ke String dulu
+        return String(pinString.suffix(4))    // Mengambil 4 digit terakhir
     }
     
     // Verifikasi PIN yang dimasukkan pengguna
@@ -53,7 +53,7 @@ class SecurityManager: ObservableObject {
         }
     }
     
-    // Kunci kembali aplikasi (Optional untuk Testing)
+    // Kunci kembali aplikasi (Opsional)
     func lockApp() {
         UserDefaults.standard.removeObject(forKey: "last_unlocked_date")
         self.isUnlocked = false
@@ -153,7 +153,6 @@ struct PinLockView: View {
         if pinInput.count < 4 {
             pinInput.append(digit)
             if pinInput.count == 4 {
-                // Autoverifikasi jika sudah 4 digit
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                     if !securityManager.verifyPIN(pinInput) {
                         errorMessage = "PIN Salah atau expired untuk hari ini!"
@@ -188,7 +187,6 @@ struct SettingsCloneApp: App {
                 }
             }
             .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
-                // Cek ulang setiap kali app dibuka kembali dari background
                 securityManager.checkDailyUnlockStatus()
             }
         }
