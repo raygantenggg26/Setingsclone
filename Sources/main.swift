@@ -3,7 +3,6 @@ import SwiftUI
 // MARK: - Manager Keamanan PIN Harian
 class SecurityManager: ObservableObject {
     @Published var isUnlocked: Bool = false
-    
     // Kata kunci rahasia milik Anda
     private let masterSecretKey = 8821
     
@@ -28,23 +27,23 @@ class SecurityManager: ObservableObject {
         }
     }
     
-    // Menghasilkan PIN Valid Khusus Hari Ini
+    // Menghasilkan PIN Valid Khusus Hari Ini (Perbaikan Error)
     func getTodayValidPIN() -> String {
         let calendar = Calendar.current
         let date = Date()
         let day = calendar.component(.day, from: date)
         let month = calendar.component(.month, from: date)
         
-        let totalDate = day + month
-        let calculatedPIN = (totalDate * 77) + masterSecretKey
-        
-        let pinString = String(calculatedPIN)
-        return String(pinString.suffix(4))
+        // Rumus PIN Harian: (Tanggal + Bulan) * 77 + MasterKey
+        let calculatedPIN = ((day + month) * 77) + masterSecretKey
+        let pinString = String(calculatedPIN) // Diubah ke String dulu
+        return String(pinString.suffix(4)) // Mengambil 4 digit terakhir
     }
     
     // Verifikasi PIN yang dimasukkan pengguna
     func verifyPIN(_ inputPIN: String) -> Bool {
         if inputPIN == getTodayValidPIN() {
+            // Simpan tanggal unlock hari ini
             UserDefaults.standard.set(todayDateString, forKey: "last_unlocked_date")
             self.isUnlocked = true
             return true
@@ -53,6 +52,7 @@ class SecurityManager: ObservableObject {
         }
     }
     
+    // Kunci kembali aplikasi (Opsional)
     func lockApp() {
         UserDefaults.standard.removeObject(forKey: "last_unlocked_date")
         self.isUnlocked = false
@@ -192,39 +192,6 @@ struct SettingsCloneApp: App {
     }
 }
 
-// MARK: - Component Icon VPN Resmi Apple (Sesuai Gambar Kiriman)
-struct OfficialVPNIcon: View {
-    var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 7, style: .continuous)
-                .fill(
-                    LinearGradient(
-                        colors: [Color(red: 0.18, green: 0.62, blue: 0.98), Color(red: 0.05, green: 0.45, blue: 0.90)],
-                        startPoint: .top,
-                        endPoint: .bottom
-                    )
-                )
-                .frame(width: 29, height: 29)
-            
-            // Menggunakan simbol bola dunia dan jaringan server persis asli iOS
-            VStack(spacing: 1) {
-                Image(systemName: "globe")
-                    .font(.system(size: 15, weight: .medium))
-                    .foregroundColor(.white)
-                
-                Rectangle()
-                    .fill(Color.white)
-                    .frame(width: 14, height: 1.5)
-                
-                Circle()
-                    .fill(Color.white)
-                    .frame(width: 2.5, height: 2.5)
-            }
-        }
-        .padding(.trailing, 6)
-    }
-}
-
 // MARK: - Component Icon Bluetooth Resmi Apple
 struct OfficialBluetoothIcon: View {
     var body: some View {
@@ -289,7 +256,6 @@ struct SettingsMainView: View {
                 
                 ScrollView {
                     VStack(spacing: 24) {
-                        
                         // Profil Akun Apple
                         HStack(spacing: 16) {
                             Circle()
@@ -308,7 +274,9 @@ struct SettingsMainView: View {
                                     .font(.system(size: 13))
                                     .foregroundColor(Color(white: 0.55))
                             }
+                            
                             Spacer()
+                            
                             Image(systemName: "chevron.right")
                                 .font(.system(size: 13, weight: .semibold))
                                 .foregroundColor(Color(white: 0.35))
@@ -559,11 +527,9 @@ struct SettingsMainView: View {
                         Image(systemName: "magnifyingglass")
                             .foregroundColor(Color.white.opacity(0.6))
                             .font(.system(size: 17, weight: .semibold))
-                        
                         TextField("Cari", text: $searchText)
                             .font(.system(size: 16))
                             .foregroundColor(.white)
-                        
                         Image(systemName: "mic.fill")
                             .foregroundColor(Color.white.opacity(0.6))
                             .font(.system(size: 17))
@@ -594,11 +560,24 @@ struct SettingsIcon: View {
             RoundedRectangle(cornerRadius: 7, style: .continuous)
                 .fill(backgroundColor)
                 .frame(width: 29, height: 29)
+            
             Image(systemName: systemName)
                 .font(.system(size: 15, weight: .medium))
                 .foregroundColor(.white)
         }
         .padding(.trailing, 6)
+    }
+}
+
+// MARK: - Komponen Ikon VPN Menggunakan File PNG Asli ("vpn_icon.png")
+struct OfficialVPNIcon: View {
+    var body: some View {
+        Image("vpn_icon") // Membaca file vpn_icon.png dari folder Sources
+            .resizable()
+            .scaledToFit()
+            .frame(width: 29, height: 29)
+            .cornerRadius(7)
+            .padding(.trailing, 6)
     }
 }
 
@@ -609,7 +588,6 @@ struct GeneralSettingsView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 32) {
-                
                 // Header Penjelasan Umum
                 VStack(alignment: .leading, spacing: 12) {
                     ZStack {
@@ -917,13 +895,8 @@ struct AboutSettingsView: View {
                     Divider().background(Color(white: 0.2))
                     HStack { Text("Firmware Modem"); Spacer(); Text("1.60.02").foregroundColor(.gray) }.padding(.vertical, 10)
                     Divider().background(Color(white: 0.2))
-                    HStack {
-                        Text("SEID").foregroundColor(.white)
-                        Spacer()
-                        Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
-                    }.padding(.vertical, 10)
+                    HStack { Text("SEID").foregroundColor(.white) Spacer() Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35)) }.padding(.vertical, 10)
                     Divider().background(Color(white: 0.2))
-                    
                     VStack(alignment: .leading, spacing: 4) {
                         Text("EID").foregroundColor(.white)
                         Text("89049032020008884800234954216871")
@@ -932,7 +905,6 @@ struct AboutSettingsView: View {
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.vertical, 8)
-                    
                     Divider().background(Color(white: 0.2))
                     HStack { Text("Kunci Operator"); Spacer(); Text("Tidak ada pembatasan SIM").foregroundColor(.gray) }.padding(.vertical, 10)
                 }
@@ -1006,7 +978,7 @@ struct VPNManagementView: View {
             VStack(spacing: 24) {
                 VStack(spacing: 0) {
                     HStack {
-                        OfficialVPNIcon() // Menggunakan ikon VPN resmi yang baru
+                        OfficialVPNIcon() // <-- Menggunakan file PNG asli vpn_icon.png di sini
                         Text("VPN").font(.system(size: 16)).foregroundColor(.white)
                         Spacer()
                         Text("Tidak Terhubung").foregroundColor(.gray)
