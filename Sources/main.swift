@@ -553,15 +553,23 @@ struct SettingsIcon: View {
     }
 }
 
-// MARK: - Komponen Ikon VPN Menggunakan File PNG Asli ("vpn_icon.png")
+// MARK: - Komponen Ikon VPN Menggunakan UIImage (Aman & Fallback Otomatis)
 struct OfficialVPNIcon: View {
     var body: some View {
-        Image("vpn_icon")
-            .resizable()
-            .scaledToFit()
-            .frame(width: 29, height: 29)
-            .cornerRadius(7)
-            .padding(.trailing, 6)
+        Group {
+            if let uiImage = UIImage(named: "vpn_icon") {
+                Image(uiImage: uiImage)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 29, height: 29)
+                    .cornerRadius(7)
+            } else {
+                RoundedRectangle(cornerRadius: 7, style: .continuous)
+                    .fill(Color.blue)
+                    .frame(width: 29, height: 29)
+            }
+        }
+        .padding(.trailing, 6)
     }
 }
 
@@ -760,7 +768,6 @@ struct GeneralSettingsView: View {
                 }
                 .iOSGroupedContainer()
                 
-                // Perbaikan Ikon Manajemen VPN & Perangkat Menjadi Ikon Gerigi (Gear Abu-abu)
                 VStack(spacing: 0) {
                     Button(action: { path.append("VPN") }) {
                         HStack {
@@ -951,7 +958,7 @@ struct VPNManagementView: View {
             VStack(spacing: 24) {
                 VStack(spacing: 0) {
                     HStack {
-                        OfficialVPNIcon() // Memanggil file vpn_icon.png dari folder Sources
+                        OfficialVPNIcon()
                         Text("VPN").font(.system(size: 16)).foregroundColor(.white)
                         Spacer()
                         Text("Tidak Terhubung").foregroundColor(.gray)
