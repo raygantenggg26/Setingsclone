@@ -2,20 +2,22 @@
 import PackageDescription
 
 let package = Package(
-    name: "SettingsClone",
+    name: "Setingsclone",
     platforms: [
-        .iOS(.v15)
+        .iOS(.v16)
     ],
     products: [
-        .executable(
-            name: "SettingsClone",
-            targets: ["SettingsClone"]
-        )
+        .library(
+            name: "Setingsclone",
+            targets: ["Setingsclone"]),
     ],
     targets: [
-        .executableTarget(
-            name: "SettingsClone",
-            path: "Sources"
+        .target(
+            name: "Setingsclone",
+            dependencies: [],
+            resources: [
+                .process("vpn_icon.png") // <-- Ini wajib ada agar PNG terbaca oleh Swift
+            ]
         )
     ]
 )
