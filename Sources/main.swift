@@ -895,7 +895,7 @@ struct AboutSettingsView: View {
                     Divider().background(Color(white: 0.2))
                     HStack { Text("Firmware Modem"); Spacer(); Text("1.60.02").foregroundColor(.gray) }.padding(.vertical, 10)
                     Divider().background(Color(white: 0.2))
-                    HStack { Text("SEID").foregroundColor(.white) Spacer() Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35)) }.padding(.vertical, 10)
+                    HStack { Text("SEID"); Spacer(); Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35)) }.padding(.vertical, 10)
                     Divider().background(Color(white: 0.2))
                     VStack(alignment: .leading, spacing: 4) {
                         Text("EID").foregroundColor(.white)
