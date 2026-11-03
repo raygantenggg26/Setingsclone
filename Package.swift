@@ -16,7 +16,7 @@ let package = Package(
             name: "Setingsclone",
             dependencies: [],
             resources: [
-                .process("vpn_icon.png") // <-- Ini wajib ada agar PNG terbaca oleh Swift
+                .process("vpn_icon.png")
             ]
         )
     ]
