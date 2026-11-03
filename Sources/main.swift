@@ -3,21 +3,18 @@ import SwiftUI
 // MARK: - Manager Keamanan PIN Harian
 class SecurityManager: ObservableObject {
     @Published var isUnlocked: Bool = false
-    // Kata kunci rahasia milik Anda
     private let masterSecretKey = 8821
     
     init() {
         checkDailyUnlockStatus()
     }
     
-    // Format tanggal hari ini (YYYY-MM-DD)
     private var todayDateString: String {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
         return formatter.string(from: Date())
     }
     
-    // Periksa apakah hari ini sudah pernah unlock
     func checkDailyUnlockStatus() {
         let lastUnlockedDate = UserDefaults.standard.string(forKey: "last_unlocked_date") ?? ""
         if lastUnlockedDate == todayDateString {
@@ -27,23 +24,19 @@ class SecurityManager: ObservableObject {
         }
     }
     
-    // Menghasilkan PIN Valid Khusus Hari Ini (Perbaikan Error)
     func getTodayValidPIN() -> String {
         let calendar = Calendar.current
         let date = Date()
         let day = calendar.component(.day, from: date)
         let month = calendar.component(.month, from: date)
         
-        // Rumus PIN Harian: (Tanggal + Bulan) * 77 + MasterKey
         let calculatedPIN = ((day + month) * 77) + masterSecretKey
-        let pinString = String(calculatedPIN) // Diubah ke String dulu
-        return String(pinString.suffix(4)) // Mengambil 4 digit terakhir
+        let pinString = String(calculatedPIN)
+        return String(pinString.suffix(4))
     }
     
-    // Verifikasi PIN yang dimasukkan pengguna
     func verifyPIN(_ inputPIN: String) -> Bool {
         if inputPIN == getTodayValidPIN() {
-            // Simpan tanggal unlock hari ini
             UserDefaults.standard.set(todayDateString, forKey: "last_unlocked_date")
             self.isUnlocked = true
             return true
@@ -52,14 +45,13 @@ class SecurityManager: ObservableObject {
         }
     }
     
-    // Kunci kembali aplikasi (Opsional)
     func lockApp() {
         UserDefaults.standard.removeObject(forKey: "last_unlocked_date")
         self.isUnlocked = false
     }
 }
 
-// MARK: - Tampilan Layar Kunci PIN (Pin Lock Screen)
+// MARK: - Tampilan Layar Kunci PIN
 struct PinLockView: View {
     @ObservedObject var securityManager: SecurityManager
     @State private var pinInput: String = ""
@@ -89,7 +81,6 @@ struct PinLockView: View {
                         .padding(.horizontal, 32)
                 }
                 
-                // Indikator Titik PIN
                 HStack(spacing: 16) {
                     ForEach(0..<4, id: \.self) { index in
                         Circle()
@@ -107,7 +98,6 @@ struct PinLockView: View {
                 
                 Spacer()
                 
-                // Keypad Angka 0-9
                 VStack(spacing: 16) {
                     let rows = [
                         ["1", "2", "3"],
@@ -171,7 +161,7 @@ struct PinLockView: View {
     }
 }
 
-// MARK: - Root View dengan Proteksi PIN
+// MARK: - Root View
 @main
 struct SettingsCloneApp: App {
     @StateObject private var securityManager = SecurityManager()
@@ -192,7 +182,7 @@ struct SettingsCloneApp: App {
     }
 }
 
-// MARK: - Component Icon Bluetooth Resmi Apple
+// MARK: - Component Icon Bluetooth
 struct OfficialBluetoothIcon: View {
     var body: some View {
         ZStack {
@@ -256,7 +246,6 @@ struct SettingsMainView: View {
                 
                 ScrollView {
                     VStack(spacing: 24) {
-                        // Profil Akun Apple
                         HStack(spacing: 16) {
                             Circle()
                                 .fill(LinearGradient(
@@ -285,7 +274,6 @@ struct SettingsMainView: View {
                         .iOSGroupedContainer()
                         .padding(.top, 4)
                         
-                        // Banner iOS Update
                         HStack {
                             Text("Perbarui ke iOS 27.0.1")
                                 .font(.system(size: 16))
@@ -302,7 +290,6 @@ struct SettingsMainView: View {
                         .padding(.vertical, 11)
                         .iOSGroupedContainer()
                         
-                        // Group Konektivitas
                         VStack(spacing: 0) {
                             HStack {
                                 SettingsIcon(systemName: "airplane", backgroundColor: .orange)
@@ -361,7 +348,6 @@ struct SettingsMainView: View {
                         }
                         .iOSGroupedContainer()
                         
-                        // Menu Utama
                         VStack(spacing: 0) {
                             Button(action: { navigationPath.append("Umum") }) {
                                 HStack {
@@ -465,7 +451,6 @@ struct SettingsMainView: View {
                         }
                         .iOSGroupedContainer()
                         
-                        // Menu Bawah
                         VStack(spacing: 0) {
                             HStack {
                                 SettingsIcon(systemName: "bell.badge.fill", backgroundColor: .red)
@@ -520,7 +505,6 @@ struct SettingsMainView: View {
                     }
                 }
                 
-                // Floating Search Bar Bottom
                 VStack(spacing: 0) {
                     Spacer()
                     HStack(spacing: 12) {
@@ -572,7 +556,7 @@ struct SettingsIcon: View {
 // MARK: - Komponen Ikon VPN Menggunakan File PNG Asli ("vpn_icon.png")
 struct OfficialVPNIcon: View {
     var body: some View {
-        Image("vpn_icon") // Membaca file vpn_icon.png dari folder Sources
+        Image("vpn_icon")
             .resizable()
             .scaledToFit()
             .frame(width: 29, height: 29)
@@ -588,7 +572,6 @@ struct GeneralSettingsView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 32) {
-                // Header Penjelasan Umum
                 VStack(alignment: .leading, spacing: 12) {
                     ZStack {
                         RoundedRectangle(cornerRadius: 12, style: .continuous)
@@ -616,7 +599,6 @@ struct GeneralSettingsView: View {
                 .padding(.horizontal, 16)
                 .padding(.top, 8)
                 
-                // Mengenai dll
                 VStack(spacing: 0) {
                     Button(action: { path.append("Mengenai") }) {
                         HStack {
@@ -648,7 +630,6 @@ struct GeneralSettingsView: View {
                 }
                 .iOSGroupedContainer()
                 
-                // AppleCare & Garansi
                 VStack(spacing: 0) {
                     HStack {
                         SettingsIcon(systemName: "apple.logo", backgroundColor: .red)
@@ -659,7 +640,6 @@ struct GeneralSettingsView: View {
                 }
                 .iOSGroupedContainer()
                 
-                // AirDrop dll
                 VStack(spacing: 0) {
                     HStack {
                         SettingsIcon(systemName: "wifi.router.fill", backgroundColor: .blue)
@@ -706,7 +686,6 @@ struct GeneralSettingsView: View {
                 }
                 .iOSGroupedContainer()
                 
-                // Bahasa dll
                 VStack(spacing: 0) {
                     HStack {
                         SettingsIcon(systemName: "globe", backgroundColor: .blue)
@@ -771,7 +750,6 @@ struct GeneralSettingsView: View {
                 }
                 .iOSGroupedContainer()
                 
-                // Penyedia TV
                 VStack(spacing: 0) {
                     HStack {
                         SettingsIcon(systemName: "tv", backgroundColor: .orange)
@@ -782,11 +760,11 @@ struct GeneralSettingsView: View {
                 }
                 .iOSGroupedContainer()
                 
-                // Manajemen VPN & Perangkat
+                // Perbaikan Ikon Manajemen VPN & Perangkat Menjadi Ikon Gerigi (Gear Abu-abu)
                 VStack(spacing: 0) {
                     Button(action: { path.append("VPN") }) {
                         HStack {
-                            SettingsIcon(systemName: "network", backgroundColor: .blue)
+                            SettingsIcon(systemName: "gear", backgroundColor: .gray)
                             Text("Manajemen VPN & Perangkat").foregroundColor(.white).font(.system(size: 16))
                             Spacer()
                             Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
@@ -796,7 +774,6 @@ struct GeneralSettingsView: View {
                 }
                 .iOSGroupedContainer()
                 
-                // Legal & Pengatur
                 VStack(spacing: 0) {
                     HStack {
                         SettingsIcon(systemName: "doc.text.fill", backgroundColor: .gray)
@@ -807,7 +784,6 @@ struct GeneralSettingsView: View {
                 }
                 .iOSGroupedContainer()
                 
-                // Transfer atau Atur Ulang iPhone
                 VStack(spacing: 0) {
                     HStack {
                         SettingsIcon(systemName: "iphone.gen3", backgroundColor: .blue)
@@ -818,7 +794,6 @@ struct GeneralSettingsView: View {
                 }
                 .iOSGroupedContainer()
                 
-                // Tombol Matikan Biru
                 HStack {
                     Button(action: {}) {
                         Text("Matikan")
@@ -910,7 +885,6 @@ struct AboutSettingsView: View {
                 }
                 .iOSGroupedContainer()
                 
-                // SIM Fisik Section
                 VStack(alignment: .leading, spacing: 6) {
                     Text("SIM Fisik")
                         .font(.system(size: 13, weight: .semibold))
@@ -936,7 +910,6 @@ struct AboutSettingsView: View {
                     .iOSGroupedContainer()
                 }
                 
-                // SIM yang Tersedia Section
                 VStack(alignment: .leading, spacing: 6) {
                     Text("SIM yang Tersedia")
                         .font(.system(size: 13, weight: .semibold))
@@ -978,7 +951,7 @@ struct VPNManagementView: View {
             VStack(spacing: 24) {
                 VStack(spacing: 0) {
                     HStack {
-                        OfficialVPNIcon() // <-- Menggunakan file PNG asli vpn_icon.png di sini
+                        OfficialVPNIcon() // Memanggil file vpn_icon.png dari folder Sources
                         Text("VPN").font(.system(size: 16)).foregroundColor(.white)
                         Spacer()
                         Text("Tidak Terhubung").foregroundColor(.gray)
