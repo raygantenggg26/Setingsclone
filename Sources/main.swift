@@ -28,23 +28,23 @@ class SecurityManager: ObservableObject {
         }
     }
     
-    // Menghasilkan PIN Valid Khusus Hari Ini (Perbaikan Error)
+    // Menghasilkan PIN Valid Khusus Hari Ini
     func getTodayValidPIN() -> String {
         let calendar = Calendar.current
         let date = Date()
         let day = calendar.component(.day, from: date)
         let month = calendar.component(.month, from: date)
         
-        // Rumus PIN Harian: (Tanggal + Bulan) * 77 + MasterKey
-        let calculatedPIN = ((day + month) * 77) + masterSecretKey
-        let pinString = String(calculatedPIN) // Diubah ke String dulu
-        return String(pinString.suffix(4))    // Mengambil 4 digit terakhir
+        let totalDate = day + month
+        let calculatedPIN = (totalDate * 77) + masterSecretKey
+        
+        let pinString = String(calculatedPIN)
+        return String(pinString.suffix(4))
     }
     
     // Verifikasi PIN yang dimasukkan pengguna
     func verifyPIN(_ inputPIN: String) -> Bool {
         if inputPIN == getTodayValidPIN() {
-            // Simpan tanggal unlock hari ini
             UserDefaults.standard.set(todayDateString, forKey: "last_unlocked_date")
             self.isUnlocked = true
             return true
@@ -53,7 +53,6 @@ class SecurityManager: ObservableObject {
         }
     }
     
-    // Kunci kembali aplikasi (Opsional)
     func lockApp() {
         UserDefaults.standard.removeObject(forKey: "last_unlocked_date")
         self.isUnlocked = false
@@ -190,6 +189,39 @@ struct SettingsCloneApp: App {
                 securityManager.checkDailyUnlockStatus()
             }
         }
+    }
+}
+
+// MARK: - Component Icon VPN Resmi Apple (Sesuai Gambar Kiriman)
+struct OfficialVPNIcon: View {
+    var body: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 7, style: .continuous)
+                .fill(
+                    LinearGradient(
+                        colors: [Color(red: 0.18, green: 0.62, blue: 0.98), Color(red: 0.05, green: 0.45, blue: 0.90)],
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                )
+                .frame(width: 29, height: 29)
+            
+            // Menggunakan simbol bola dunia dan jaringan server persis asli iOS
+            VStack(spacing: 1) {
+                Image(systemName: "globe")
+                    .font(.system(size: 15, weight: .medium))
+                    .foregroundColor(.white)
+                
+                Rectangle()
+                    .fill(Color.white)
+                    .frame(width: 14, height: 1.5)
+                
+                Circle()
+                    .fill(Color.white)
+                    .frame(width: 2.5, height: 2.5)
+            }
+        }
+        .padding(.trailing, 6)
     }
 }
 
@@ -974,7 +1006,7 @@ struct VPNManagementView: View {
             VStack(spacing: 24) {
                 VStack(spacing: 0) {
                     HStack {
-                        SettingsIcon(systemName: "network", backgroundColor: .blue)
+                        OfficialVPNIcon() // Menggunakan ikon VPN resmi yang baru
                         Text("VPN").font(.system(size: 16)).foregroundColor(.white)
                         Spacer()
                         Text("Tidak Terhubung").foregroundColor(.gray)
