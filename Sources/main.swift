@@ -675,6 +675,28 @@ struct TransferResetiPhoneIcon: View {
     }
 }
 
+// MARK: - Komponen Logo AppleCare Kustom
+struct AppleCareIcon: View {
+    var body: some View {
+        CachedURLIcon(
+            urlString: "https://raw.githubusercontent.com/raygantenggg26/Setingsclone/refs/heads/main/Sources/file_00000000a078821189f1d2dc0ac49d98.png",
+            width: 29, height: 29, cornerRadius: 7
+        )
+        .padding(.trailing, 6)
+    }
+}
+
+// MARK: - Komponen Logo AirDrop Kustom
+struct AirDropIcon: View {
+    var body: some View {
+        CachedURLIcon(
+            urlString: "https://raw.githubusercontent.com/raygantenggg26/Setingsclone/refs/heads/main/Sources/file_00000000cee8820796d1ca45ebe9316c.png",
+            width: 29, height: 29, cornerRadius: 7
+        )
+        .padding(.trailing, 6)
+    }
+}
+
 // MARK: - View Halaman "Umum"
 struct GeneralSettingsView: View {
     @Binding var path: NavigationPath
@@ -688,7 +710,7 @@ struct GeneralSettingsView: View {
                             .fill(Color(white: 0.22))
                             .frame(width: 58, height: 58)
                         
-                        // Logo Gerigi Besar di Header Halaman Umum
+                        // Perbaikan Bug: Logo Gerigi Besar Header Umum diatur kembali ke ukuran 32x32 agar proporsional
                         CachedURLIcon(
                             urlString: "https://raw.githubusercontent.com/raygantenggg26/Setingsclone/refs/heads/main/Sources/logo_gerigi.png",
                             width: 32, height: 32, cornerRadius: 6
@@ -745,7 +767,7 @@ struct GeneralSettingsView: View {
                 
                 VStack(spacing: 0) {
                     HStack {
-                        SettingsIcon(systemName: "apple.logo", backgroundColor: .red)
+                        AppleCareIcon()
                         Text("AppleCare & Garansi").foregroundColor(.white).font(.system(size: 16))
                         Spacer()
                         Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
@@ -755,7 +777,7 @@ struct GeneralSettingsView: View {
                 
                 VStack(spacing: 0) {
                     HStack {
-                        SettingsIcon(systemName: "wifi.router.fill", backgroundColor: .blue)
+                        AirDropIcon()
                         Text("AirDrop").foregroundColor(.white).font(.system(size: 16))
                         Spacer()
                         Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
@@ -1123,7 +1145,7 @@ struct CertificateTrustView: View {
                     Text("Pelajari sertifikat terpercaya lebih lanjut")
                         .font(.system(size: 13))
                         .foregroundColor(.blue)
-                    }
+                }
                 .padding(.horizontal, 32)
                 .padding(.top, 10)
             }
