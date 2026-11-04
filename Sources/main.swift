@@ -710,10 +710,10 @@ struct GeneralSettingsView: View {
                             .fill(Color(white: 0.22))
                             .frame(width: 58, height: 58)
                         
-                        // Perbaikan Bug: Logo Gerigi Besar Header Umum diatur kembali ke ukuran 32x32 agar proporsional
+                        // DIPERBESAR: Logo Gerigi Besar Header Umum diatur ke 50x50 agar proporsional
                         CachedURLIcon(
                             urlString: "https://raw.githubusercontent.com/raygantenggg26/Setingsclone/refs/heads/main/Sources/logo_gerigi.png",
-                            width: 32, height: 32, cornerRadius: 6
+                            width: 50, height: 50, cornerRadius: 10
                         )
                     }
                     
