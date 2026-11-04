@@ -553,7 +553,7 @@ struct SettingsIcon: View {
     }
 }
 
-// MARK: - Komponen Ikon VPN Menggunakan Bundle Utama
+// MARK: - Komponen Ikon VPN Langsung Membaca File PNG Asli
 struct OfficialVPNIcon: View {
     var body: some View {
         Group {
@@ -573,9 +573,14 @@ struct OfficialVPNIcon: View {
                     .frame(width: 29, height: 29)
                     .cornerRadius(7)
             } else {
-                RoundedRectangle(cornerRadius: 7, style: .continuous)
-                    .fill(Color.blue)
-                    .frame(width: 29, height: 29)
+                ZStack {
+                    RoundedRectangle(cornerRadius: 7, style: .continuous)
+                        .fill(Color.blue)
+                        .frame(width: 29, height: 29)
+                    Image(systemName: "network")
+                        .font(.system(size: 15))
+                        .foregroundColor(.white)
+                }
             }
         }
         .padding(.trailing, 6)
