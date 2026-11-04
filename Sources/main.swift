@@ -553,13 +553,20 @@ struct SettingsIcon: View {
     }
 }
 
-// MARK: - Komponen Ikon VPN Membaca File PNG Asli via Path Bundle SPM
+// MARK: - Komponen Ikon VPN Menggunakan Bundle Utama
 struct OfficialVPNIcon: View {
     var body: some View {
         Group {
-            if let path = Bundle.module.path(forResource: "vpn_icon", ofType: "png"),
+            if let path = Bundle.main.path(forResource: "vpn_icon", ofType: "png"),
                let uiImage = UIImage(contentsOfFile: path) {
                 Image(uiImage: uiImage)
+                    .renderingMode(.original)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 29, height: 29)
+                    .cornerRadius(7)
+            } else if let uiImageNamed = UIImage(named: "vpn_icon") {
+                Image(uiImage: uiImageNamed)
                     .renderingMode(.original)
                     .resizable()
                     .scaledToFit()
