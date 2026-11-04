@@ -553,10 +553,11 @@ struct SettingsIcon: View {
     }
 }
 
-// MARK: - Komponen Ikon VPN Langsung Membaca File PNG Asli
+// MARK: - Komponen Ikon VPN (Membaca file PNG secara langsung dari path file system utama)
 struct OfficialVPNIcon: View {
     var body: some View {
         Group {
+            // Memaksa pencarian path fisik langsung dengan nama file vpn_icon.png
             if let path = Bundle.main.path(forResource: "vpn_icon", ofType: "png"),
                let uiImage = UIImage(contentsOfFile: path) {
                 Image(uiImage: uiImage)
@@ -565,22 +566,11 @@ struct OfficialVPNIcon: View {
                     .scaledToFit()
                     .frame(width: 29, height: 29)
                     .cornerRadius(7)
-            } else if let uiImageNamed = UIImage(named: "vpn_icon") {
-                Image(uiImage: uiImageNamed)
-                    .renderingMode(.original)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 29, height: 29)
-                    .cornerRadius(7)
             } else {
-                ZStack {
-                    RoundedRectangle(cornerRadius: 7, style: .continuous)
-                        .fill(Color.blue)
-                        .frame(width: 29, height: 29)
-                    Image(systemName: "network")
-                        .font(.system(size: 15))
-                        .foregroundColor(.white)
-                }
+                // Tanda jika file benar-benar belum terbaca di direktori
+                RoundedRectangle(cornerRadius: 7, style: .continuous)
+                    .fill(Color.blue)
+                    .frame(width: 29, height: 29)
             }
         }
         .padding(.trailing, 6)
