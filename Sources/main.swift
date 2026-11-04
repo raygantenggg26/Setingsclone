@@ -1,5 +1,79 @@
 import SwiftUI
 
+// MARK: - Manager Cache Gambar Lokal untuk Mencegah Loading Berulang
+class ImageCacheManager {
+    static let shared = ImageCacheManager()
+    private var cache = NSCache<NSString, UIImage>()
+    
+    func get(forKey key: String) -> UIImage? {
+        return cache.object(forKey: key as NSString)
+    }
+    
+    func set(_ image: UIImage, forKey key: String) {
+        cache.setObject(image, forKey: key as NSString)
+    }
+}
+
+// MARK: - Komponen Universal Custom Image dari URL dengan Cache Instan
+struct CachedURLIcon: View {
+    let urlString: String
+    let width: CGFloat
+    let height: CGFloat
+    let cornerRadius: CGFloat
+    
+    @State private var cachedImage: UIImage? = nil
+    @State private var isLoading = false
+    
+    var body: some View {
+        Group {
+            if let image = cachedImage {
+                Image(uiImage: image)
+                    .renderingMode(.original)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: width, height: height)
+                    .cornerRadius(cornerRadius)
+            } else {
+                ZStack {
+                    RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+                        .fill(Color.gray.opacity(0.3))
+                        .frame(width: width, height: height)
+                    
+                    ProgressView()
+                        .scaleEffect(0.5)
+                }
+                .frame(width: width, height: height)
+                .onAppear {
+                    loadImage()
+                }
+            }
+        }
+    }
+    
+    private func loadImage() {
+        let cacheKey = urlString as NSString
+        
+        if let cached = ImageCacheManager.shared.get(forKey: urlString) {
+            self.cachedImage = cached
+            return
+        }
+        
+        guard !isLoading, let url = URL(string: urlString) else { return }
+        isLoading = true
+        
+        URLSession.shared.dataTask(with: url) { data, _, _ in
+            isLoading = false
+            guard let data = data, let uiImage = UIImage(data: data) else { return }
+            
+            ImageCacheManager.shared.set(uiImage, forKey: urlString)
+            
+            DispatchQueue.main.async {
+                self.cachedImage = uiImage
+            }
+        }.resume()
+    }
+}
+
 // MARK: - Manager Keamanan PIN Harian
 class SecurityManager: ObservableObject {
     @Published var isUnlocked: Bool = false
@@ -351,7 +425,7 @@ struct SettingsMainView: View {
                         VStack(spacing: 0) {
                             Button(action: { navigationPath.append("Umum") }) {
                                 HStack {
-                                    SettingsIcon(systemName: "gear", backgroundColor: .gray)
+                                    CustomGearIcon()
                                     Text("Umum").font(.system(size: 16)).foregroundColor(.white)
                                     Spacer()
                                     Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
@@ -553,30 +627,50 @@ struct SettingsIcon: View {
     }
 }
 
-// MARK: - Komponen Ikon VPN Mengambil Gambar dari Link Raw GitHub
+// MARK: - Komponen Logo Gerigi Kustom (Umum)
+struct CustomGearIcon: View {
+    var body: some View {
+        CachedURLIcon(
+            urlString: "https://raw.githubusercontent.com/raygantenggg26/Setingsclone/refs/heads/main/Sources/logo_gerigi.png",
+            width: 29,
+            height: 29,
+            cornerRadius: 7
+        )
+        .padding(.trailing, 6)
+    }
+}
+
+// MARK: - Komponen Logo VPN Kustom
 struct OfficialVPNIcon: View {
     var body: some View {
-        Group {
-            AsyncImage(url: URL(string: "https://raw.githubusercontent.com/raygantenggg26/Setingsclone/refs/heads/main/Sources/vpn_icon.png")) { phase in
-                switch phase {
-                case .empty:
-                    ProgressView()
-                        .frame(width: 29, height: 29)
-                case .success(let image):
-                    image
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 29, height: 29)
-                        .cornerRadius(7)
-                case .failure(_):
-                    RoundedRectangle(cornerRadius: 7, style: .continuous)
-                        .fill(Color.blue)
-                        .frame(width: 29, height: 29)
-                @unknown default:
-                    EmptyView()
-                }
-            }
-        }
+        CachedURLIcon(
+            urlString: "https://raw.githubusercontent.com/raygantenggg26/Setingsclone/refs/heads/main/Sources/vpn_icon.png",
+            width: 29,
+            height: 29,
+            cornerRadius: 7
+        )
+        .padding(.trailing, 6)
+    }
+}
+
+// MARK: - Komponen Logo Penyedia TV Kustom
+struct TVProviderIcon: View {
+    var body: some View {
+        CachedURLIcon(
+            urlString: "https://raw.githubusercontent.com/raygantenggg26/Setingsclone/refs/heads/main/Sources/a_clean_flat_high_contrast_minimalist_vector_st.png",
+            width: 29, height: 29, cornerRadius: 7
+        )
+        .padding(.trailing, 6)
+    }
+}
+
+// MARK: - Komponen Logo Transfer/Atur Ulang iPhone Kustom
+struct TransferResetiPhoneIcon: View {
+    var body: some View {
+        CachedURLIcon(
+            urlString: "https://raw.githubusercontent.com/raygantenggg26/Setingsclone/refs/heads/main/Sources/a_clean_flat_icon_image_a_simple_minimal_user_in.png",
+            width: 29, height: 29, cornerRadius: 7
+        )
         .padding(.trailing, 6)
     }
 }
@@ -593,9 +687,12 @@ struct GeneralSettingsView: View {
                         RoundedRectangle(cornerRadius: 12, style: .continuous)
                             .fill(Color(white: 0.22))
                             .frame(width: 58, height: 58)
-                        Image(systemName: "gear")
-                            .font(.system(size: 32))
-                            .foregroundColor(.white)
+                        
+                        // Logo Gerigi Besar di Header Halaman Umum
+                        CachedURLIcon(
+                            urlString: "https://raw.githubusercontent.com/raygantenggg26/Setingsclone/refs/heads/main/Sources/logo_gerigi.png",
+                            width: 32, height: 32, cornerRadius: 6
+                        )
                     }
                     
                     Text("Umum")
@@ -768,7 +865,7 @@ struct GeneralSettingsView: View {
                 
                 VStack(spacing: 0) {
                     HStack {
-                        SettingsIcon(systemName: "tv", backgroundColor: .orange)
+                        TVProviderIcon()
                         Text("Penyedia TV").foregroundColor(.white).font(.system(size: 16))
                         Spacer()
                         Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
@@ -779,7 +876,7 @@ struct GeneralSettingsView: View {
                 VStack(spacing: 0) {
                     Button(action: { path.append("VPN") }) {
                         HStack {
-                            SettingsIcon(systemName: "gear", backgroundColor: .gray)
+                            CustomGearIcon()
                             Text("Manajemen VPN & Perangkat").foregroundColor(.white).font(.system(size: 16))
                             Spacer()
                             Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
@@ -801,7 +898,7 @@ struct GeneralSettingsView: View {
                 
                 VStack(spacing: 0) {
                     HStack {
-                        SettingsIcon(systemName: "iphone.gen3", backgroundColor: .blue)
+                        TransferResetiPhoneIcon()
                         Text("Transfer atau Atur Ulang iPhone").foregroundColor(.white).font(.system(size: 16))
                         Spacer()
                         Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
@@ -1026,7 +1123,7 @@ struct CertificateTrustView: View {
                     Text("Pelajari sertifikat terpercaya lebih lanjut")
                         .font(.system(size: 13))
                         .foregroundColor(.blue)
-                }
+                    }
                 .padding(.horizontal, 32)
                 .padding(.top, 10)
             }
