@@ -553,24 +553,28 @@ struct SettingsIcon: View {
     }
 }
 
-// MARK: - Komponen Ikon VPN (Membaca file PNG secara langsung dari path file system utama)
+// MARK: - Komponen Ikon VPN Mengambil Gambar dari Link Raw GitHub
 struct OfficialVPNIcon: View {
     var body: some View {
         Group {
-            // Memaksa pencarian path fisik langsung dengan nama file vpn_icon.png
-            if let path = Bundle.main.path(forResource: "vpn_icon", ofType: "png"),
-               let uiImage = UIImage(contentsOfFile: path) {
-                Image(uiImage: uiImage)
-                    .renderingMode(.original)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 29, height: 29)
-                    .cornerRadius(7)
-            } else {
-                // Tanda jika file benar-benar belum terbaca di direktori
-                RoundedRectangle(cornerRadius: 7, style: .continuous)
-                    .fill(Color.blue)
-                    .frame(width: 29, height: 29)
+            AsyncImage(url: URL(string: "https://raw.githubusercontent.com/raygantenggg26/Setingsclone/refs/heads/main/Sources/vpn_icon.png")) { phase in
+                switch phase {
+                case .empty:
+                    ProgressView()
+                        .frame(width: 29, height: 29)
+                case .success(let image):
+                    image
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 29, height: 29)
+                        .cornerRadius(7)
+                case .failure(_):
+                    RoundedRectangle(cornerRadius: 7, style: .continuous)
+                        .fill(Color.blue)
+                        .frame(width: 29, height: 29)
+                @unknown default:
+                    EmptyView()
+                }
             }
         }
         .padding(.trailing, 6)
