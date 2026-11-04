@@ -1,6 +1,6 @@
 import SwiftUI
 
-// MARK: - Manager Cache Gambar Lokal untuk Mencegah Loading Berulang
+// MARK: - Manager Cache Gambar Global & Preloader Cepat
 class ImageCacheManager {
     static let shared = ImageCacheManager()
     private var cache = NSCache<NSString, UIImage>()
@@ -12,6 +12,28 @@ class ImageCacheManager {
     func set(_ image: UIImage, forKey key: String) {
         cache.setObject(image, forKey: key as NSString)
     }
+    
+    // Fungsi untuk prefetch semua gambar ikon agar langsung siap pakai saat aplikasi dibuka
+    func prefetchImages() {
+        let urls = [
+            "https://raw.githubusercontent.com/raygantenggg26/Setingsclone/refs/heads/main/Sources/vpn_icon.png",
+            "https://raw.githubusercontent.com/raygantenggg26/Setingsclone/refs/heads/main/Sources/logo_gerigi.png",
+            "https://raw.githubusercontent.com/raygantenggg26/Setingsclone/refs/heads/main/Sources/a_clean_flat_high_contrast_minimalist_vector_st.png",
+            "https://raw.githubusercontent.com/raygantenggg26/Setingsclone/refs/heads/main/Sources/a_clean_flat_icon_image_a_simple_minimal_user_in.png",
+            "https://raw.githubusercontent.com/raygantenggg26/Setingsclone/refs/heads/main/Sources/file_00000000a078821189f1d2dc0ac49d98.png",
+            "https://raw.githubusercontent.com/raygantenggg26/Setingsclone/refs/heads/main/Sources/file_00000000cee8820796d1ca45ebe9316c.png"
+        ]
+        
+        for urlString in urls {
+            if cache.object(forKey: urlString as NSString) == nil, let url = URL(string: urlString) {
+                URLSession.shared.dataTask(with: url) { data, _, _ in
+                    if let data = data, let image = UIImage(data: data) {
+                        self.cache.setObject(image, forKey: urlString as NSString)
+                    }
+                }.resume()
+            }
+        }
+    }
 }
 
 // MARK: - Komponen Universal Custom Image dari URL dengan Cache Instan
@@ -22,55 +44,37 @@ struct CachedURLIcon: View {
     let cornerRadius: CGFloat
     
     @State private var cachedImage: UIImage? = nil
-    @State private var isLoading = false
     
     var body: some View {
         Group {
             if let image = cachedImage {
                 Image(uiImage: image)
                     .renderingMode(.original)
-                    .resizable()
-                    .scaledToFit()
+                    .resizable(resizingMode: .stretch)
+                    .aspectRatio(contentMode: .fill)
                     .frame(width: width, height: height)
                     .cornerRadius(cornerRadius)
             } else {
-                ZStack {
-                    RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
-                        .fill(Color.gray.opacity(0.3))
-                        .frame(width: width, height: height)
-                    
-                    ProgressView()
-                        .scaleEffect(0.5)
-                }
-                .frame(width: width, height: height)
-                .onAppear {
-                    loadImage()
-                }
+                RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+                    .fill(Color.gray.opacity(0.3))
+                    .frame(width: width, height: height)
+                    .onAppear {
+                        // Cek langsung dari cache memori tanpa task baru jika sudah ada
+                        if let cached = ImageCacheManager.shared.get(forKey: urlString) {
+                            self.cachedImage = cached
+                        } else if let url = URL(string: urlString) {
+                            URLSession.shared.dataTask(with: url) { data, _, _ in
+                                if let data = data, let uiImage = UIImage(data: data) {
+                                    ImageCacheManager.shared.set(uiImage, forKey: urlString)
+                                    DispatchQueue.main.async {
+                                        self.cachedImage = uiImage
+                                    }
+                                }
+                            }.resume()
+                        }
+                    }
             }
         }
-    }
-    
-    private func loadImage() {
-        let cacheKey = urlString as NSString
-        
-        if let cached = ImageCacheManager.shared.get(forKey: urlString) {
-            self.cachedImage = cached
-            return
-        }
-        
-        guard !isLoading, let url = URL(string: urlString) else { return }
-        isLoading = true
-        
-        URLSession.shared.dataTask(with: url) { data, _, _ in
-            isLoading = false
-            guard let data = data, let uiImage = UIImage(data: data) else { return }
-            
-            ImageCacheManager.shared.set(uiImage, forKey: urlString)
-            
-            DispatchQueue.main.async {
-                self.cachedImage = uiImage
-            }
-        }.resume()
     }
 }
 
@@ -81,6 +85,7 @@ class SecurityManager: ObservableObject {
     
     init() {
         checkDailyUnlockStatus()
+        ImageCacheManager.shared.prefetchImages() // Prefetch otomatis saat init
     }
     
     private var todayDateString: String {
@@ -710,10 +715,10 @@ struct GeneralSettingsView: View {
                             .fill(Color(white: 0.22))
                             .frame(width: 58, height: 58)
                         
-                        // DIPERBESAR: Logo Gerigi Besar Header Umum diatur ke 50x50 agar proporsional
+                        // DIPERBESAR OPTIMAL: Ukuran 56x56 pas memenuhi kotak 58x58
                         CachedURLIcon(
                             urlString: "https://raw.githubusercontent.com/raygantenggg26/Setingsclone/refs/heads/main/Sources/logo_gerigi.png",
-                            width: 50, height: 50, cornerRadius: 10
+                            width: 56, height: 56, cornerRadius: 11
                         )
                     }
                     
