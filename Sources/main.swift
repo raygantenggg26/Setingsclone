@@ -13,7 +13,7 @@ class ImageCacheManager {
         cache.setObject(image, forKey: key as NSString)
     }
     
-    // Fungsi untuk prefetch semua gambar ikon agar langsung siap pakai saat aplikasi dibuka
+    // Fungsi prefetch untuk mengunduh semua ikon kustom di awal agar langsung siap pakai
     func prefetchImages() {
         let urls = [
             "https://raw.githubusercontent.com/raygantenggg26/Setingsclone/refs/heads/main/Sources/vpn_icon.png",
@@ -21,7 +21,9 @@ class ImageCacheManager {
             "https://raw.githubusercontent.com/raygantenggg26/Setingsclone/refs/heads/main/Sources/a_clean_flat_high_contrast_minimalist_vector_st.png",
             "https://raw.githubusercontent.com/raygantenggg26/Setingsclone/refs/heads/main/Sources/a_clean_flat_icon_image_a_simple_minimal_user_in.png",
             "https://raw.githubusercontent.com/raygantenggg26/Setingsclone/refs/heads/main/Sources/file_00000000a078821189f1d2dc0ac49d98.png",
-            "https://raw.githubusercontent.com/raygantenggg26/Setingsclone/refs/heads/main/Sources/file_00000000cee8820796d1ca45ebe9316c.png"
+            "https://raw.githubusercontent.com/raygantenggg26/Setingsclone/refs/heads/main/Sources/file_00000000cee8820796d1ca45ebe9316c.png",
+            "https://raw.githubusercontent.com/raygantenggg26/Setingsclone/refs/heads/main/Sources/bluetooth_icon.png",
+            "https://raw.githubusercontent.com/raygantenggg26/Setingsclone/refs/heads/main/Sources/atom_icon.png"
         ]
         
         for urlString in urls {
@@ -59,7 +61,6 @@ struct CachedURLIcon: View {
                     .fill(Color.gray.opacity(0.3))
                     .frame(width: width, height: height)
                     .onAppear {
-                        // Cek langsung dari cache memori tanpa task baru jika sudah ada
                         if let cached = ImageCacheManager.shared.get(forKey: urlString) {
                             self.cachedImage = cached
                         } else if let url = URL(string: urlString) {
@@ -85,7 +86,7 @@ class SecurityManager: ObservableObject {
     
     init() {
         checkDailyUnlockStatus()
-        ImageCacheManager.shared.prefetchImages() // Prefetch otomatis saat init
+        ImageCacheManager.shared.prefetchImages()
     }
     
     private var todayDateString: String {
@@ -261,36 +262,25 @@ struct SettingsCloneApp: App {
     }
 }
 
-// MARK: - Component Icon Bluetooth
+// MARK: - Komponen Icon Bluetooth Kustom dari URL
 struct OfficialBluetoothIcon: View {
     var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 7, style: .continuous)
-                .fill(Color(red: 0.0, green: 0.48, blue: 1.0))
-                .frame(width: 29, height: 29)
-            
-            BluetoothShape()
-                .stroke(Color.white, style: StrokeStyle(lineWidth: 2.2, lineCap: .round, lineJoin: .round))
-                .frame(width: 11, height: 16)
-        }
+        CachedURLIcon(
+            urlString: "https://raw.githubusercontent.com/raygantenggg26/Setingsclone/refs/heads/main/Sources/bluetooth_icon.png",
+            width: 29, height: 29, cornerRadius: 7
+        )
         .padding(.trailing, 6)
     }
 }
 
-struct BluetoothShape: Shape {
-    func path(in rect: CGRect) -> Path {
-        var path = Path()
-        let w = rect.width
-        let h = rect.height
-        
-        path.move(to: CGPoint(x: w * 0.25, y: h * 0.25))
-        path.addLine(to: CGPoint(x: w * 0.75, y: h * 0.50))
-        path.addLine(to: CGPoint(x: w * 0.50, y: h * 0.08))
-        path.addLine(to: CGPoint(x: w * 0.50, y: h * 0.92))
-        path.addLine(to: CGPoint(x: w * 0.75, y: h * 0.50))
-        path.addLine(to: CGPoint(x: w * 0.25, y: h * 0.75))
-        
-        return path
+// MARK: - Komponen Icon Apple Intelligence Kustom dari URL
+struct AppleIntelligenceIcon: View {
+    var body: some View {
+        CachedURLIcon(
+            urlString: "https://raw.githubusercontent.com/raygantenggg26/Setingsclone/refs/heads/main/Sources/atom_icon.png",
+            width: 29, height: 29, cornerRadius: 7
+        )
+        .padding(.trailing, 6)
     }
 }
 
@@ -450,7 +440,7 @@ struct SettingsMainView: View {
                             Divider().background(Color(white: 0.2))
                             
                             HStack {
-                                SettingsIcon(systemName: "sparkles", backgroundColor: Color(red: 0.92, green: 0.35, blue: 0.18))
+                                AppleIntelligenceIcon()
                                 Text("Apple Intelligence & Siri").font(.system(size: 16)).foregroundColor(.white)
                                 Spacer()
                                 Image(systemName: "chevron.right").font(.system(size: 13, weight: .semibold)).foregroundColor(Color(white: 0.35))
@@ -715,10 +705,10 @@ struct GeneralSettingsView: View {
                             .fill(Color(white: 0.22))
                             .frame(width: 58, height: 58)
                         
-                        // DIPERBESAR OPTIMAL: Ukuran 56x56 pas memenuhi kotak 58x58
+                        // DIPERBESAR MAKSIMAL: Ukuran 58x58 pas memenuhi kotak abu-abu
                         CachedURLIcon(
                             urlString: "https://raw.githubusercontent.com/raygantenggg26/Setingsclone/refs/heads/main/Sources/logo_gerigi.png",
-                            width: 56, height: 56, cornerRadius: 11
+                            width: 58, height: 58, cornerRadius: 12
                         )
                     }
                     
